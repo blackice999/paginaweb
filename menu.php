@@ -10,7 +10,7 @@
 
         <ul class="dropdown menu" data-dropdown-menu id="example-menu">
             <li><a href="/paginaweb/index" class="active">Home</a></li>
-            <li><a href="/paginaweb/computer/parts">Computer parts</a>
+            <li><a href="/paginaweb/computer_parts">Computer parts</a>
                 <ul class="menu vertical">
                     <li><a href="motherboards.html">Motherboards</a></li>
                     <li><a href="motherboards.html">Motherboards</a></li>
