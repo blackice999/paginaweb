@@ -1,0 +1,16 @@
+#Enable runtime rewriting of weblink
+RewriteEngine on
+
+#If request does not match a file, continue to next line
+RewriteCond %{REQUEST_FILENAME} !-f
+
+#If request does not match a directory, continue to next line
+RewriteCond %{REQUEST_FILENAME} !-d
+
+#Redirect every weblink to index.php sending in HTTP GET the path
+# NC - Matches in case-insensitive manner
+# L - Stop rewriting and don't apply any more rules
+# QSA - Append a query string after the URI was rewritten
+# ie - URL = http://www.example.com/user/login?id=2 will be
+# /index.php?path=user/login&id=2
+RewriteRule ^(.*)$ index.php?path=$1 [NC,L,QSA]
