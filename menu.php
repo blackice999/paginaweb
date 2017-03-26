@@ -1,7 +1,9 @@
 <div class="row">
 
     <div class="large-10 medium-10 small-10 small-centered medium-centered large-centered columns">
-        <img class="float-center" src="/paginaweb/img/workstation-147953_960_720.png" style="width: 30%; height: 30%;">
+        <a href="/paginaweb/index">
+            <img class="float-center" src="/paginaweb/img/workstation-147953_960_720.png" style="width: 30%; height: 30%;">
+        </a>
 
         <div class="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium">
             <button class="menu-icon" type="button" data-toggle="example-menu"></button>
@@ -9,7 +11,6 @@
         </div>
 
         <ul class="dropdown menu" data-dropdown-menu id="example-menu">
-            <li><a href="/paginaweb/index" class="active">Home</a></li>
             <li><a href="/paginaweb/computer_parts">Computer parts</a>
                 <ul class="menu vertical">
                     <li><a href="motherboards.html">Motherboards</a></li>
@@ -42,6 +43,7 @@
             </li>
             <li><a href="/paginaweb/informations">Informations</a></li>
             <li><a href="/paginaweb/contact">Contact</a></li>
+            <li><a href="/paginaweb/account">My account</a></li>
         </ul>
     </div>
 </div>
