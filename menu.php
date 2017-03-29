@@ -39,8 +39,17 @@
             </li>
             <li><a href="/paginaweb/telephones">Telephones</a>
                 <ul class="menu vertical">
-                    <li><a href="test.html">asdf</a></li>
-                    <li><a href="test.html">asdf</a></li>
+                    <li><a href="smartphones">Smartphones</a></li>
+                    <li><a href="smartwatches">Smartwatches</a></li>
+                    <li><a href="external_batteries"> External batteries</a></li>
+                    <li><a href="gsm_accessories">GSM accesories</a>
+                        <ul class="menu vertical">
+                            <li><a href="selfie_sticks">Selfie sticks</a></li>
+                            <li><a href="memory_cards">Memory cards</a></li>
+                            <li><a href="chargers">Chargers</a></li>
+                            <li><a href="wireless_chargers">Wireless chargers</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
             <li><a href="/paginaweb/audio_photo">Audio Photo/video</a>
