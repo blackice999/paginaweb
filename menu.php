@@ -24,8 +24,10 @@
             </li>
             <li><a href="/paginaweb/peripherials">Peripherials</a>
                 <ul class="menu vertical">
-                    <li><a href="test">asdf</a></li>
-                    <li><a href="test.html">asdf</a></li>
+                    <li><a href="monitors">Monitors</a></li>
+                    <li><a href="mice">Mice</a></li>
+                    <li><a href="keyboards">Keyboardss</a></li>
+                    <li><a href="external_hdds">External HDDs</a></li>
                 </ul>
             </li>
             <li><a href="/paginaweb/software">Software</a>
