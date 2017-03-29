@@ -32,8 +32,9 @@
             </li>
             <li><a href="/paginaweb/software">Software</a>
                 <ul class="menu vertical">
-                    <li><a href="test.html">asdf</a></li>
-                    <li><a href="test.html">asdf</a></li>
+                    <li><a href="operating_system">Operating systems</a></li>
+                    <li><a href="office_apps">Office applications</a></li>
+                    <li><a href="security_solutions">Security solutions</a></li>
                 </ul>
             </li>
             <li><a href="/paginaweb/telephones">Telephones</a>
