@@ -13,13 +13,18 @@
         <ul class="dropdown menu" data-dropdown-menu id="example-menu">
             <li><a href="/paginaweb/computer_parts">Computer parts</a>
                 <ul class="menu vertical">
-                    <li><a href="motherboards.html">Motherboards</a></li>
-                    <li><a href="motherboards.html">Motherboards</a></li>
+                    <li><a href="motherboards">Motherboards</a></li>
+                    <li><a href="video_cards">Video cards</a></li>
+                    <li><a href="processors">Processors</a></li>
+                    <li><a href="ssds">SSDs</a></li>
+                    <li><a href="hdds">HDDs</a></li>
+                    <li><a href="power_supplies">Power supplies</a></li>
+                    <li><a href="chassis">Chassis</a></li>
                 </ul>
             </li>
             <li><a href="/paginaweb/peripherials">Peripherials</a>
                 <ul class="menu vertical">
-                    <li><a href="test.html">asdf</a></li>
+                    <li><a href="test">asdf</a></li>
                     <li><a href="test.html">asdf</a></li>
                 </ul>
             </li>
