@@ -54,8 +54,19 @@
             </li>
             <li><a href="/paginaweb/audio_photo">Audio Photo/video</a>
                 <ul class="menu vertical">
-                    <li><a href="test.html">asdf</a></li>
-                    <li><a href="test.html">asdf</a></li>
+                    <li><a href="/paginaweb/speakers">Speakers</a>
+                        <ul class="menu vertical">
+                            <li><a href="/paginaweb/speakers/portable_speakers">Portable speakers</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="microphones">Microphones</a></li>
+                    <li><a href="microphones">Cameras</a>
+                         <ul class="menu vertical">
+                            <li><a href="/paginaweb/cameras/d_slr">D-SLR Cameras</a></li>
+                            <li><a href="/paginaweb/cameras/compact">Compact Cameras</a></li>
+                            <li><a href="/paginaweb/cameras/bridge">Bridge Cameras</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
             <li><a href="/paginaweb/informations">Informations</a></li>
