@@ -1,0 +1,7 @@
+.dropdown.menu > li.is-dropdown-submenu-parent > a::after {
+    border-color: black transparent transparent;
+}
+
+.menu > li > a {
+    color: #000000;
+}
