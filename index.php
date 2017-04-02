@@ -5,27 +5,6 @@
     <title>Web shop</title>
     <link rel="stylesheet" type="text/css" href="/paginaweb/css/foundation.css">
     <link rel="stylesheet" type="text/css" href="/paginaweb/css/app.css">
-
-    <style>
-
-    </style>
-
-    <script>
-
-        var jsonPath = window.location.pathname;
-
-        components = jsonPath.split("/");
-
-        rootPath = components[1];
-
-        //Remove root and /paginaweb from the path
-        components.shift();
-        components.shift();
-
-//        document.write(components);
-        var path = components.join("/");
-        document.write(path);
-    </script>
 </head>
 
 <body>
@@ -43,20 +22,12 @@
     ?>
 
 <script>
-    var arr = [], links = document.links;
+    path = window.location.pathname;
 
-    for(var i = 0; i< links.length; i++){
-        arr.push(links[i].pathname);
-    }
+    //Search all the elements with the attribute href having the value of path given
+    var matches = document.querySelector("[href='" + path + "']");
 
-    console.log(arr);
-
-    element = arr[10];
-//    element.shift();
-    console.log(element);
-
-    var matches = document.querySelectorAll("[href='/paginaweb/monitors']");
-    console.log(matches);
-    </script>
+    $(matches).parents("[role='menuitem']:last").addClass("active");
+</script>
 </body>
 </html>
