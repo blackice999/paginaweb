@@ -73,6 +73,7 @@
             <li><a href="<?php echo $rootPath; ?>informations">Informations</a></li>
             <li><a href="<?php echo $rootPath; ?>contact">Contact</a></li>
             <li><a href="<?php echo $rootPath; ?>account">My account</a></li>
+            <li><a href="<?php echo $rootPath; ?>"register>Register</li>
         </ul>
     </div>
 </div>
