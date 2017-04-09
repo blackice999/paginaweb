@@ -11,12 +11,17 @@
     <?php
 
         include "menu.php";
+//        include "Router.php";
 
+        include "autoload.php";
         $path = $_GET['path'];
-        echo $path;
 
-        if($path === "software") {
-            echo "in software";
+//        echo $class = ucfirst($path) . "Controller";
+
+        $router = new Router($path);
+
+        if($path === "contact") {
+            echo "yes";
         }
 
         if($path === "account"):
