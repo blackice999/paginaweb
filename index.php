@@ -8,75 +8,74 @@
 </head>
 
 <body>
-    <?php
+<?php
 
-        include "menu.php";
-//        include "Router.php";
+include "menu.php";
+include "autoload.php";
 
-        include "autoload.php";
-        $path = $_GET['path'];
+$path = $_GET['path'];
 
-//        echo $class = ucfirst($path) . "Controller";
+//If the URL is like /paginaweb/ then the $path will be empty, so make path "index"
+if(empty($path)) {
+    $path = "index";
+}
+// echo $class = ucfirst($path) . "Controller";
 
-        $router = new Router($path);
+$router = new Router($path);
 
-        if($path === "contact") {
-            echo "yes";
-        }
-
-        if($path === "account"):
-            //If not logged in, show login form
+if ($path === "account"):
+    //If not logged in, show login form
     ?>
-        <form method="post" action="login.php" style="margin-top: 20px;">
-            <div class="row">
-                <div class="large-10 columns">
-                    <label>
-                        Username
-                        <input type="text" name="username">
-                    </label>
-
-                    <label>
-                        Password
-                        <input type="password" name="password">
-                    </label>
-                    <input type="submit" class="button" value="Log in">
-                </div>
-
-            </div>
-        </form>
-    <?php
-        //else show register form
-//        else:
-    ?>
+    <form method="post" action="login.php" style="margin-top: 20px;">
         <div class="row">
             <div class="large-10 columns">
-                <h2> Register </h2>
-                <form method="post" action="register.php">
-                    <label>
-                        Full name
-                        <input type="text" name="name">
-                    </label>
-                    <label>
-                        Address
-                        <input type="text" name="address">
-                    </label>
-                    <label>
-                        Username
-                        <input type="text" name="username">
-                    </label>
-                    <label>
-                        Password
-                        <input type="password" name="password">
-                    </label>
-                    <label>
-                        Repeat password
-                        <input type="password" name="repeat_password">
-                    </label>
-                    <input type="submit" class="button" value="Register">
-                 </form>
+                <label>
+                    Username
+                    <input type="text" name="username">
+                </label>
+
+                <label>
+                    Password
+                    <input type="password" name="password">
+                </label>
+                <input type="submit" class="button" value="Log in">
             </div>
+
+        </div>
+    </form>
+    <?php
+    //else show register form
+//        else:
+    ?>
+    <div class="row">
+        <div class="large-10 columns">
+            <h2> Register </h2>
+            <form method="post" action="register.php">
+                <label>
+                    Full name
+                    <input type="text" name="name">
+                </label>
+                <label>
+                    Address
+                    <input type="text" name="address">
+                </label>
+                <label>
+                    Username
+                    <input type="text" name="username">
+                </label>
+                <label>
+                    Password
+                    <input type="password" name="password">
+                </label>
+                <label>
+                    Repeat password
+                    <input type="password" name="repeat_password">
+                </label>
+                <input type="submit" class="button" value="Register">
+            </form>
+        </div>
     </div>
-        <?php endif; ?>
+<?php endif; ?>
 
 <script>
     path = window.location.pathname;
