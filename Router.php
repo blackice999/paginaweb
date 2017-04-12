@@ -34,7 +34,9 @@ class Router
             $this->generateClassFromPath($this->getMainCategoryFromSubcategory($path));
         }
 
-        return new $this->class;
+        if(class_exists($this->class)) {
+            return new $this->class;
+        }
     }
 
     /**
