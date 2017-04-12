@@ -10,18 +10,20 @@
 <body>
 <?php
 
+
 include "menu.php";
 include "autoload.php";
 
 $path = $_GET['path'];
 
 //If the URL is like /paginaweb/ then the $path will be empty, so make path "index"
-if(empty($path)) {
+if (empty($path)) {
     $path = "index";
 }
 // echo $class = ucfirst($path) . "Controller";
 
 $router = new Router($path);
+$router->processRequest();
 
 if ($path === "account"):
     //If not logged in, show login form

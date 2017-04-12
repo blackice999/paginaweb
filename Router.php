@@ -9,7 +9,7 @@
 class Router
 {
     private $path;
-    private $class = "";
+    private $class = "Controllers\\";
     private $classPath = "";
 
     public function __construct(string $path)
@@ -32,10 +32,15 @@ class Router
         //At the end, $this->class will be something like: OperatingSystemControlller
         $this->class .= "Controller";
 
-        $this->classPath = $this->class . ".php";
+        $this->classPath = "Controllers/" . $this->class . ".php";
 
         echo $this->class;
 
+    }
+
+    public function processRequest()
+    {
+        return new $this->class;
     }
 
 }
