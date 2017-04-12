@@ -14,16 +14,15 @@
 include "menu.php";
 include "autoload.php";
 
-$path = $_GET['path'];
-
 //If the URL is like /paginaweb/ then the $path will be empty, so make path "index"
-if (empty($path)) {
+if (empty($_GET['path'])) {
     $path = "index";
+} else {
+    $path = $_GET['path'];
 }
-// echo $class = ucfirst($path) . "Controller";
 
 $router = new Router($path);
-$router->processRequest();
+$router->processRequest($path);
 
 if ($path === "account"):
     //If not logged in, show login form
