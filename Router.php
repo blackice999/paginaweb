@@ -30,7 +30,7 @@ class Router
             $this->generateClassFromPath($path);
         } else {
 
-            //Will return, for example, "computer_parts" if the subcategory is "monitors"
+            //Will return, for example, "computer_parts" if the subcategory is "motherboards"
             $this->generateClassFromPath($this->getMainCategoryFromSubcategory($path));
         }
 
@@ -40,7 +40,7 @@ class Router
     }
 
     /**
-     * Will return, for example, "computer_parts" if the subcategory is "monitors"
+     * Will return, for example, "computer_parts" if the subcategory is "motherboards"
      * @param string $path the subcategory path that was sent to the class
      * @return string The path of the main category or an empty string if the $path is already a main category
      *
