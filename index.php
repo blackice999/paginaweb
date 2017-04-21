@@ -27,7 +27,7 @@ $router->processRequest($path);
 if ($path === "account"):
     //If not logged in, show login form
     ?>
-    <form method="post" action="login.php" style="margin-top: 20px;">
+    <form method="post" action="informations" style="margin-top: 20px;">
         <div class="row">
             <div class="large-10 columns">
                 <label>
@@ -39,7 +39,7 @@ if ($path === "account"):
                     Password
                     <input type="password" name="password">
                 </label>
-                <input type="submit" class="button" value="Log in">
+                <input type="submit" class="button" value="Log in" name="login">
             </div>
 
         </div>
