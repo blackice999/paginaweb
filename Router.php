@@ -35,7 +35,9 @@ class Router
         }
 
         if(class_exists($this->class)) {
-            return new $this->class;
+           $controller = new $this->class;
+            $request = strtolower($_SERVER['REQUEST_METHOD']);
+            return $controller->{$request}();
         }
     }
 
