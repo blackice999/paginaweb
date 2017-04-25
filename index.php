@@ -65,6 +65,10 @@ if ($path === "account"):
                     <input type="text" name="username">
                 </label>
                 <label>
+                    Email
+                    <input type="text" name="email">
+                </label>
+                <label>
                     Password
                     <input type="password" name="password">
                 </label>
