@@ -10,6 +10,7 @@ namespace Models;
 
 
 use Models\Exceptions\ConnectionException;
+use Models\Exceptions\NoResultsException;
 use Models\Exceptions\QueryException;
 
 class Mysql
@@ -60,6 +61,33 @@ class Mysql
         self::query($sql);
 
         return self::getConnection()->insert_id;
+    }
+
+    public static function getMany(string $tableName, string $type, array $where)
+    {
+
+        //TO USE - mysqli_fetch_all
+        $sql = "SELECT * FROM " . $tableName . " WHERE ";
+
+        foreach ($where as $key => $value) {
+            $sql .= '`' . $key . '` = "' . self::getConnection()->escape_string($value) . '" AND ';
+        }
+
+        $sql = rtrim($sql, " AND ");
+
+        $result = self::query($sql);
+
+        //Return an associative array of the result
+        $array = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $array[$type][] = $row;
+        }
+
+        if (empty($result)) {
+            throw new Exceptions\NoResultsException('no results in table ' . $tableName . ' by ' . json_encode($where));
+        }
+
+        return $array;
     }
 
 }
