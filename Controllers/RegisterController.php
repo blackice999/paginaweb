@@ -9,6 +9,7 @@
 namespace Controllers;
 
 
+use Models\Mysql;
 use Utils\FormGenerator;
 use Utils\HTMLGenerator;
 
@@ -29,6 +30,20 @@ class RegisterController implements Controller
 
     public function post()
     {
-        // TODO: Implement post() method.
+        if(isset($_POST['register'])) {
+            $name = explode(" ", $_POST['name']);
+            $firstName = $name[0];
+            $lastName = $name[1];
+
+            Mysql::insert("users", [
+                "first_name" => $firstName,
+                "last_name" => $lastName,
+                "username" => $_POST['username'],
+                "email" => $_POST['email'],
+                "password" => $_POST['password']
+            ]);
+
+            echo "Succesfully inserted user";
+        }
     }
 }

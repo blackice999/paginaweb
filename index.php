@@ -51,7 +51,7 @@ if ($path === "account"):
     <div class="row">
         <div class="large-10 columns">
             <h2> Register </h2>
-            <form method="post" action="register.php">
+            <form method="post" action="register">
                 <label>
                     Full name
                     <input type="text" name="name">
@@ -76,7 +76,7 @@ if ($path === "account"):
                     Repeat password
                     <input type="password" name="repeat_password">
                 </label>
-                <input type="submit" class="button" value="Register">
+                <input type="submit" class="button" value="Register" name="register">
             </form>
         </div>
     </div>
