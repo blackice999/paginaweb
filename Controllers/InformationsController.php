@@ -63,8 +63,18 @@ class InformationsController implements Controller
 
     public function post()
     {
+        //Tested delete a user from login page
         if (isset($_POST['login'])) {
-            echo "it is login in informations";
+            $username = $_POST['username'];
+
+
+            // FIX - Will always return true even if the value does not exist
+            var_dump(Mysql::delete("users", ["username" => $username]));
+            if((Mysql::delete("users", ["username" => $username]))) {
+                echo "Succesfully deleted user " . $username;
+            } else {
+                echo "user does not exist";
+            }
         }
     }
 

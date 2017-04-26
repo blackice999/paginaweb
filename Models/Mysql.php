@@ -90,4 +90,18 @@ class Mysql
         return $array;
     }
 
+    public static function delete(string $tableName, array $where)
+    {
+        $sql = "DELETE FROM " . $tableName . " WHERE ";
+
+        foreach ($where as $key => $value) {
+            $sql .= '`' . $key . '` = "' . self::getConnection()->escape_string($value) . '" AND ';
+        }
+
+
+        $sql = rtrim($sql, " AND ");
+
+        return self::query($sql);
+    }
+
 }
