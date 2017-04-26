@@ -9,6 +9,8 @@
 namespace Controllers;
 
 
+use Models\Mysql;
+
 class InformationsController implements Controller
 {
 
@@ -69,6 +71,23 @@ class InformationsController implements Controller
     public function get()
     {
         $this->showMenu();
+
+        echo "<pre>";
+        $result = Mysql::getMany("users", "hunt_id",  ["id" => 1]);
+        var_dump($result);
+
+        echo "<div class='large-5 medium-5 small-5 columns'>";
+
+            echo "<table border='1'>";
+                echo "<tr>";
+                    echo "<th> First Name</th>";
+                    echo "<th> Last Name </th>";
+                    echo "<th> Username </th>";
+                    echo "<th> Email </th>";
+                echo "</tr>";
+            echo "<table>";
+        echo "</div>";
+
     }
 
     private function showMenu()
