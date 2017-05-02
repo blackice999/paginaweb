@@ -14,32 +14,29 @@ class FormGenerator
     private $method;
     private $action;
     private $validInputTypes = ["text", "email", "password", "date", "submit"];
+    private static $validMethodTypes = ["post", "get"];
     private $data;
 
     public static function generate(string $method, string $action, array $data)
     {
-        $labels = array_column($data, "label");
-        $types = array_column($data, "type");
-        $names = array_column($data, "name");
 
-        foreach($data as $key => $value['label']) {
-            foreach($value as $item) {
-                echo $item;
-            }
+         if(!in_array($method, self::$validMethodTypes)) {
+            throw new Exceptions\MethodNotValid("Method " . $method . " is not a valid method type");
         }
 
         echo "<form method=$method action=$action>";
 
+        foreach($data as $input) {
+            echo "<label>" . $input['label'] . "</label>";
+
+            if($input['type'] === "submit") {
+                echo "<input type=" . $input['type'] . " class='button' name=" . $input['name'] . " value=" . $input['value'] . ">";     
+            } else {
+                echo "<input type=" . $input['type'] . " name=" . $input['name'] . " value=" . $input['value'] . ">"; 
+            }
+        }
+
         echo "</form>";
-
-        var_dump($labels);
-
-
-        $values = [
-            ["label" => "Username", "type" => "text", "name" => "username"],
-            ["label" => "Email", "type" => "text", "name" => "email"],
-            ["label" => "Password", "type" => "password", "name" => "password"]
-        ];
     }
 
 
