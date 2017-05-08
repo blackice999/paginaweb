@@ -27,6 +27,8 @@ class RegisterController implements Controller
             ["label" => "", "type" => "submit", "name" => "register", "value" => "Register"]
         ]);
         HTMLGenerator::closeRow();
+
+        Mysql::update("asdf", ['id' => 2, 'name' => 'af'], ['name' => 'this', 'city' => 'baia mare']);
     }
 
     public function post()
