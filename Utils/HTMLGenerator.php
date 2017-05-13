@@ -19,7 +19,8 @@ class HTMLGenerator
      * @param int $mediumColumnSize The size of the column on medium displays
      * @param int $smallColumnSize The size of the column on small displays
      */
-    public static function createRow(int $largeColumnSize, int $mediumColumnSize = 8, int $smallColumnSize = 10) {
+    public static function row(int $largeColumnSize, int $mediumColumnSize = 8, int $smallColumnSize = 10)
+    {
         echo "<div class='row'>
            <div class='large-$largeColumnSize medium-$mediumColumnSize small-$smallColumnSize columns'>";
     }
@@ -27,23 +28,24 @@ class HTMLGenerator
     /**
      * Will close the row, as it is not good to leave hanging HTML tags
      */
-    public static function closeRow() {
+    public static function closeRow()
+    {
         echo "</div> </div>";
     }
 
-    public static function generateForm(string $method, string $action, array $data)
+    public static function form(string $method, string $action, array $data)
     {
 
-        if(!in_array($method, self::$validMethodTypes)) {
+        if (!in_array($method, self::$validMethodTypes)) {
             throw new Exceptions\MethodNotValid("Method " . $method . " is not a valid method type");
         }
 
         echo "<form method=$method action=$action>";
 
-        foreach($data as $input) {
+        foreach ($data as $input) {
             echo "<label>" . $input['label'] . "</label>";
 
-            if($input['type'] === "submit") {
+            if ($input['type'] === "submit") {
                 echo "<input type=" . $input['type'] . " class='button' name=" . $input['name'] . " value=" . $input['value'] . ">";
             } else {
                 echo "<input type=" . $input['type'] . " name=" . $input['name'] . " value=" . $input['value'] . ">";
@@ -51,6 +53,15 @@ class HTMLGenerator
         }
 
         echo "</form>";
+    }
+
+    public static function tag(string $tagName, string $content, string $class = "")
+    {
+        echo "<" . $tagName . " class='" . $class . "'>" . $content . "</" . $tagName . ">";
+    }
+
+    public static function link(string $href, string $content, string $class="") {
+        echo "<a href='" . $href . "' class='" . $class . "'>" . $content . "</a>";
     }
 
 }

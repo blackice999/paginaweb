@@ -19,9 +19,10 @@ class LogInController implements Controller
 
     public function get()
     {
-        HTMLGenerator::createRow(4);
-        echo "<h2> Log In </h2>";
-        HTMLGenerator::generateForm("post", "log_in", [
+        HTMLGenerator::row(4);
+        HTMLGenerator::tag("h2", "Log In");
+
+        HTMLGenerator::form("post", "log_in", [
                 ["label" => "Email", "type" => "email", "name" => "email", "value" => ""],
                 ["label" => "Password", "type" => "password", "name" => "password", "value" => ""],
                 ["label" => "", "type" => "submit", "name" => "login", "value" => "Login"]
@@ -59,8 +60,8 @@ class LogInController implements Controller
             if (!empty($errors)) {
                 var_dump($this->errors);
             } else {
-                HTMLGenerator::createRow(5,5,5);
-                echo "<h2> Successfully logged in ";
+                HTMLGenerator::row(5,5,5);
+                HTMLGenerator::tag("h2","Successfully logged in");
                 HTMLGenerator::closeRow();
                 $_SESSION['userId'] = $userModel->id;
 

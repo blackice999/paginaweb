@@ -9,6 +9,8 @@
 namespace Controllers;
 
 
+use Utils\HTMLGenerator;
+
 class ComputerPartsController implements Controller
 {
     private $categories = ["motherboards", "video_cards", "processors", "ssds", "hdds", "power_supplies", "chassis"];
@@ -18,12 +20,14 @@ class ComputerPartsController implements Controller
 
         foreach ($this->categories as $category) {
 
-            echo "<h3>" . ucfirst(str_replace("_", " ", $category)) . "</h3> <a href='computer_parts?category='" . $category . "> Check all " . str_replace("_", " ", $category) . "</a>";
+            $titleFromLink = str_replace("_", " ", $category);
+            HTMLGenerator::tag("h3", ucfirst($titleFromLink));
+            HTMLGenerator::link("conputer_parts?category=" . $category, "Check all " . $titleFromLink);
         }
 
+
         if (isset($_GET['category'])) {
-
-
+            echo "ys";
             $category = $_GET['category'];
             $this->{$category}();
 
@@ -35,7 +39,7 @@ class ComputerPartsController implements Controller
 
     }
 
-    public function video()
+    public function video_cards()
     {
         echo "yes";
     }
