@@ -56,6 +56,14 @@ class RegisterController implements Controller
                 $this->errors[] = "Email is empty";
             }
 
+            if (UserModel::userExists($email)) {
+                $this->errors[] = "Email already taken";
+            }
+
+            if (empty($password) || strlen($password) < 6) {
+                $this->errors[] = "Password should be longer than 6 characters";
+            }
+
             if ($password != $repeatPassword) {
                 $this->errors[] = "Passwords do not match";
             }
