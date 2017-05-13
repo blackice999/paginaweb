@@ -22,7 +22,7 @@ class ComputerPartsController implements Controller
 
             $titleFromLink = str_replace("_", " ", $category);
             HTMLGenerator::tag("h3", ucfirst($titleFromLink));
-            HTMLGenerator::link("conputer_parts?category=" . $category, "Check all " . $titleFromLink);
+            HTMLGenerator::link("computer_parts?category=" . $category, "Check all " . $titleFromLink);
         }
 
 
