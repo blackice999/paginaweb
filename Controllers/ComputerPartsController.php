@@ -30,8 +30,6 @@ class ComputerPartsController implements Controller
                 HTMLGenerator::link("computer_parts?category=" . $category, "Check all " . $titleFromLink);
             }
         }
-
-
     }
 
     public function post()
@@ -39,15 +37,16 @@ class ComputerPartsController implements Controller
 
     }
 
-    private function motherboards()
-    {
-        echo "in motherboards";
-    }
 
-    private function videoCards()
+    public function __call($name, $arguments)
     {
-        echo "In video cards";
+        echo "in " . $name;
     }
+//    private function motherboards()
+//    {
+//        echo "in motherboards";
+//    }
+
 
     private function processors()
     {
@@ -74,7 +73,8 @@ class ComputerPartsController implements Controller
         echo "In chassis";
     }
 
-    private function toCamelCase(string $category) {
+    private function toCamelCase(string $category)
+    {
         $category = ucwords($category, "_");
 
         //Remove "_" from the inside of the category

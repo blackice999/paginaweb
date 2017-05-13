@@ -80,7 +80,7 @@
             <?php if (!isset($_SESSION['userId'])) { ?>
                 <li><a href="<?php echo $rootPath; ?>log_in">Log In</a></li>
             <?php } else { ?>
-                <li><a href="<?php echo $rootPath; ?>logout">Log out</a></li>
+                <li><a href="<?php echo $rootPath; ?>log_out">Log out</a></li>
             <?php } ?>
             <li><a href="<?php echo $rootPath; ?>register">Register</a></li>
         </ul>
