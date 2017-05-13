@@ -15,3 +15,4 @@ if (!file_exists(BASE_PATH . '/vendor/autoload.php')) {
 }
 require_once BASE_PATH . '/vendor/autoload.php';
 require_once "config.php";
+session_start();

@@ -11,8 +11,8 @@
 <?php
 
 
-include "menu.php";
 include "autoload.php";
+include "menu.php";
 
 //If the URL is like /paginaweb/ then the $path will be empty, so make path "index"
 if (empty($_GET['path'])) {
@@ -27,23 +27,7 @@ $router->processRequest($path);
 if ($path === "account"):
     //If not logged in, show login form
     ?>
-    <form method="post" action="informations" style="margin-top: 20px;">
-        <div class="row">
-            <div class="large-10 columns">
-                <label>
-                    Username
-                    <input type="text" name="username">
-                </label>
 
-                <label>
-                    Password
-                    <input type="password" name="password">
-                </label>
-                <input type="submit" class="button" value="Log in" name="login">
-            </div>
-
-        </div>
-    </form>
     <?php
     //else show register form
 //        else:
