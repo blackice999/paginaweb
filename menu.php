@@ -1,9 +1,10 @@
-<?php $rootPath = "/paginaweb/"?>
+<?php $rootPath = "/paginaweb/" ?>
 <div class="row">
 
     <div class="large-10 medium-10 small-10 small-centered medium-centered large-centered columns">
         <a href="<?php echo $rootPath; ?>index">
-            <img class="float-center" src="<?php echo $rootPath; ?>img/workstation-147953_960_720.png" style="width: 30%; height: 30%;">
+            <img class="float-center" src="<?php echo $rootPath; ?>img/workstation-147953_960_720.png"
+                 style="width: 30%; height: 30%;">
         </a>
 
         <div class="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium">
@@ -48,7 +49,8 @@
                             <li><a href="<?php echo $rootPath; ?>gsm_accessories/selfie_sticks">Selfie sticks</a></li>
                             <li><a href="<?php echo $rootPath; ?>gsm_accessories/memory_cards">Memory cards</a></li>
                             <li><a href="<?php echo $rootPath; ?>gsm_accessories/chargers">Chargers</a></li>
-                            <li><a href="<?php echo $rootPath; ?>gsm_accessories/wireless_chargers">Wireless chargers</a></li>
+                            <li><a href="<?php echo $rootPath; ?>gsm_accessories/wireless_chargers">Wireless
+                                    chargers</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -62,7 +64,7 @@
                     </li>
                     <li><a href="<?php echo $rootPath; ?>microphones">Microphones</a></li>
                     <li><a href="<?php echo $rootPath; ?>microphones">Cameras</a>
-                         <ul class="menu vertical">
+                        <ul class="menu vertical">
                             <li><a href="<?php echo $rootPath; ?>cameras/d_slr">D-SLR Cameras</a></li>
                             <li><a href="<?php echo $rootPath; ?>cameras/compact">Compact Cameras</a></li>
                             <li><a href="<?php echo $rootPath; ?>cameras/bridge">Bridge Cameras</a></li>
@@ -73,7 +75,13 @@
             <li><a href="<?php echo $rootPath; ?>informations">Informations</a></li>
             <li><a href="<?php echo $rootPath; ?>contact">Contact</a></li>
             <li><a href="<?php echo $rootPath; ?>account">My account</a></li>
-            <li><a href="<?php echo $rootPath; ?>log_in">Log In</a></li>
+
+            <!-- Show login link if user is not logged in, register link otherwise -->
+            <?php if (!isset($_SESSION['userId'])) { ?>
+                <li><a href="<?php echo $rootPath; ?>log_in">Log In</a></li>
+            <?php } else { ?>
+                <li><a href="<?php echo $rootPath; ?>logout">Log out</a></li>
+            <?php } ?>
             <li><a href="<?php echo $rootPath; ?>register">Register</a></li>
         </ul>
     </div>
