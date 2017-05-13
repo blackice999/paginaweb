@@ -11,6 +11,8 @@ namespace Utils;
 
 class HTMLGenerator
 {
+    private $validInputTypes = ["text", "email", "password", "date", "submit"];
+    private static $validMethodTypes = ["post", "get"];
 
     /**
      * @param int $largeColumnSize The size of the column on large displays
@@ -27,6 +29,28 @@ class HTMLGenerator
      */
     public static function closeRow() {
         echo "</div> </div>";
+    }
+
+    public static function generateForm(string $method, string $action, array $data)
+    {
+
+        if(!in_array($method, self::$validMethodTypes)) {
+            throw new Exceptions\MethodNotValid("Method " . $method . " is not a valid method type");
+        }
+
+        echo "<form method=$method action=$action>";
+
+        foreach($data as $input) {
+            echo "<label>" . $input['label'] . "</label>";
+
+            if($input['type'] === "submit") {
+                echo "<input type=" . $input['type'] . " class='button' name=" . $input['name'] . " value=" . $input['value'] . ">";
+            } else {
+                echo "<input type=" . $input['type'] . " name=" . $input['name'] . " value=" . $input['value'] . ">";
+            }
+        }
+
+        echo "</form>";
     }
 
 }

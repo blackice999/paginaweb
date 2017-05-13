@@ -20,7 +20,7 @@ class RegisterController implements Controller
     {
         HTMLGenerator::createRow(4);
         echo "<h2> Register</h2>";
-        FormGenerator::generate("post", "register.php", [
+        HTMLGenerator::generateForm("post", "register.php", [
             ["label" => "Username", "type" => "text", "name" => "username", "value" => ""],
             ["label" => "Email", "type" => "text", "name" => "email", "value" => ""],
             ["label" => "Password", "type" => "password", "name" => "password", "value" => ""],
