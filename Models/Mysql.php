@@ -63,6 +63,25 @@ class Mysql
         return self::getConnection()->insert_id;
     }
 
+    public static function getOne(string $tableName, array $where)
+    {
+        $sql = "SELECT * FROM `" . $tableName . "` WHERE ";
+
+        foreach ($where as $key => $value) {
+            $sql .= '`' . $key . '` = "' . self::getConnection()->escape_string($value) . '" AND ';
+        }
+
+        $sql = rtrim($sql, " AND ");
+
+        $result = mysqli_fetch_assoc(self::query($sql));
+
+        if (empty($result)) {
+            throw new NoResultsException("no results in table " . $tableName . " by " . json_encode($where));
+        }
+
+        return $result;
+    }
+
     public static function getMany(string $tableName, string $type, array $where)
     {
 
@@ -121,7 +140,7 @@ class Mysql
         }
 
         $sql = rtrim($sql, " AND ");
-        
+
         return self::query($sql);
     }
 
