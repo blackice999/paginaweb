@@ -82,31 +82,19 @@ class Mysql
         return $result;
     }
 
-    public static function getMany(string $tableName, string $type, array $where)
+    public static function getMany(string $tableName, array $where = [])
     {
-
-        //TO USE - mysqli_fetch_all
-        $sql = "SELECT * FROM " . $tableName . " WHERE ";
+        $sql = "SELECT * FROM `" . $tableName . "`";
+        $clauses = [];
 
         foreach ($where as $key => $value) {
-            $sql .= '`' . $key . '` = "' . self::getConnection()->escape_string($value) . '" AND ';
+            $clauses[] = '`' . $key . '` = "' . self::getConnection()->escape_string($value) . '"';
         }
 
-        $sql = rtrim($sql, " AND ");
+        $sql .= (count($clauses) > 0) ? ' WHERE ' . implode(" AND ", $clauses) : '';
+        $result = mysqli_fetch_all(self::query($sql), MYSQLI_ASSOC);
 
-        $result = self::query($sql);
-
-        //Return an associative array of the result
-        $array = [];
-        while ($row = mysqli_fetch_assoc($result)) {
-            $array[$type][] = $row;
-        }
-
-        if (empty($result)) {
-            throw new Exceptions\NoResultsException('no results in table ' . $tableName . ' by ' . json_encode($where));
-        }
-
-        return $array;
+        return $result ?: [];
     }
 
     public static function delete(string $tableName, array $where)
