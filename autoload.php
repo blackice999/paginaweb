@@ -16,3 +16,6 @@ if (!file_exists(BASE_PATH . '/vendor/autoload.php')) {
 require_once BASE_PATH . '/vendor/autoload.php';
 require_once "config.php";
 session_start();
+//Enable output buffering for the logout script to work properly
+//If not set, "header already sent" warning is shown
+ob_start();

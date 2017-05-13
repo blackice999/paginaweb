@@ -64,7 +64,9 @@ if ($path === "account"):
             </form>
         </div>
     </div>
-<?php endif; ?>
+<?php endif;
+ob_end_flush();
+?>
 
 <script>
     path = window.location.pathname;
