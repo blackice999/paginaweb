@@ -9,6 +9,8 @@
 namespace Controllers;
 
 
+use Models\ProductModel;
+use Models\Mysql;
 use Utils\HTMLGenerator;
 
 class ComputerPartsController implements Controller
@@ -18,8 +20,8 @@ class ComputerPartsController implements Controller
     public function get()
     {
 
-        if (isset($_GET['category'])) {
-            $category = $this->toCamelCase($_GET['category']);
+        if (isset($_GET['path']) && $_GET['path'] !== "computer_parts") {
+            $category = $this->toCamelCase($_GET['path']);
             $this->{$category}();
 
         } else {
@@ -27,9 +29,12 @@ class ComputerPartsController implements Controller
 
                 $titleFromLink = str_replace("_", " ", $category);
                 HTMLGenerator::tag("h3", ucfirst($titleFromLink));
-                HTMLGenerator::link("computer_parts?category=" . $category, "Check all " . $titleFromLink);
+                HTMLGenerator::link($category, "Check all " . $titleFromLink);
             }
         }
+
+        //TODO -- get content from database
+        //Find a way to create main category -> sub category relationship in database
     }
 
     public function post()
@@ -38,15 +43,35 @@ class ComputerPartsController implements Controller
     }
 
 
-    public function __call($name, $arguments)
+    private function motherboards()
     {
-        echo "in " . $name;
-    }
-//    private function motherboards()
-//    {
-//        echo "in motherboards";
-//    }
+        echo "<div class=\"row small-up-2 medium-up-5 large-up-3\" style='margin-top:10px;'>";
+        foreach (ProductModel::loadByCategoryId(2) as $motherboard) {
+            echo "<div class=\"column\" style='border: 1px solid black; padding: 10px; height: 400px;'>
+                 <img src=\"//placehold.it/150x150\" alt=\"\" class='float-center' style='margin-bottom: 30px;'>
+                <a href='motherboards/$motherboard->id' class='float-center text-center' style=' margin-bottom: 30px;'>";
 
+            echo $motherboard->name . "</a>";
+
+
+            echo " <ul>";
+            foreach ($motherboard->getProductSpecModel() as $productSpecModel) {
+                echo "<li>" . $productSpecModel->name . "</li>";
+            }
+            echo "</ul>";
+
+            HTMLGenerator::tag("h3", "$" . $motherboard->price);
+            echo "</div>";
+
+        }
+
+        echo "</div>";
+    }
+
+    private function videoCards()
+    {
+        echo "In video cards";
+    }
 
     private function processors()
     {
