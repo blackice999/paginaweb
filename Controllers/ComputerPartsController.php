@@ -11,7 +11,9 @@ namespace Controllers;
 
 use Models\ProductModel;
 use Models\Mysql;
+use Models\ProductSpecModel;
 use Utils\HTMLGenerator;
+use Utils\StringUtils;
 
 class ComputerPartsController implements Controller
 {
@@ -39,7 +41,17 @@ class ComputerPartsController implements Controller
 
     public function post()
     {
+        echo $_GET['path'];
+        if (isset($_POST['submit']) && $_GET['path'] === "motherboards") {
+            $name = StringUtils::sanitizeString($_POST['name']);
+            $description = StringUtils::sanitizeString($_POST['description']);
+            $price = StringUtils::sanitizeString($_POST['price']);
+            $specName = StringUtils::sanitizeString($_POST['spec_name']);
 
+            $result = ProductModel::create("products", $name, $description, $price);
+            HTMLGenerator::tag("p", "Inserted new motherboard with the id " . $result->id);
+            ProductSpecModel::create("product_specs", $result->id, $specName);
+        }
     }
 
 
@@ -66,6 +78,17 @@ class ComputerPartsController implements Controller
         }
 
         echo "</div>";
+
+        HTMLGenerator::row(5, 5, 5);
+        HTMLGenerator::tag("h2", "Add a new motherboard");
+        HTMLGenerator::form("post", "motherboards", [
+            ["label" => "Name", "type" => "text", "name" => "name", "value" => ""],
+            ["label" => "Description", "type" => "text", "name" => "description", "value" => ""],
+            ["label" => "price", "type" => "text", "name" => "price", "value" => ""],
+            ["label" => "Specification name", "type" => "text", "name" => "spec_name", "value" => ""],
+            ["label" => "", "type" => "submit", "name" => "submit", "value" => "Insert motherboard"]
+        ]);
+        HTMLGenerator::closeRow();
     }
 
     private function videoCards()

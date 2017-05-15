@@ -26,6 +26,11 @@ class ProductModel extends ActiveRecord
         return $computerPartsModel;
     }
 
+    public static function loadById(int $id) {
+        $result = Mysql::getOne("products", ["id" => $id]);
+        return new self($result);
+    }
+
     public function getProductSpecModel()
     {
         if (is_null($this->productSpecModel)) {
@@ -33,5 +38,11 @@ class ProductModel extends ActiveRecord
         }
 
         return $this->productSpecModel;
+    }
+
+    public static function create(string $tableName, string $name, string $description, string $price) {
+        $result = Mysql::insert($tableName, ["category_id" => 2, "name" => $name, "description" => $description, "price" => $price]);
+        return self::loadById($result);
+
     }
 }
