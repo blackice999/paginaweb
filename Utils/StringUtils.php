@@ -23,7 +23,7 @@ class StringUtils
         return str_replace("_", " ", $value);
     }
 
-    public static function toSingular(string $value) {
+    public static function toSingular(string $category) {
         //Remove "s" from the end
         $category = substr($category, 0, strlen($category) - 1);
 
