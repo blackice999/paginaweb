@@ -48,7 +48,9 @@ class ComputerPartsController implements Controller
             $specName = StringUtils::sanitizeString($_POST['spec_name']);
 
             $result = ProductModel::create($categoryId, "products", $name, $description, $price);
-            HTMLGenerator::tag("p", "Inserted new " . StringUtils::toSingular($name) . "with the id " . $result->id);
+            HTMLGenerator::tag("p", "Inserted new " .
+                StringUtils::removeUnderscore(StringUtils::toSingular($name)) .
+                " with the id " . $result->id);
             ProductSpecModel::create($result->id, $specName);
         }
     }
