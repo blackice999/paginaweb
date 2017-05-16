@@ -17,10 +17,16 @@ use Utils\StringUtils;
 class ComputerPartsController implements Controller
 {
     private $categories = ["motherboards", "video_cards", "processors", "ssds", "hdds", "power_supplies", "chassis"];
+    const MOTHERBOARDS_CATEGORY_ID = 2;
+    const VIDEO_CARDS_CATEGORY_ID = 3;
+    const PROCESSORS_CATEGORY_ID = 4;
+    const SSDS_CATEGORY_ID = 5;
+    const HDDS_CATEGORY_ID = 6;
+    const POWER_SUPPLIES_CATEGORY_ID = 7;
+    const CHASSIS_CATEGORY_ID = 8;
 
     public function get()
     {
-
         if (isset($_GET['path']) && $_GET['path'] !== "computer_parts") {
             $category = $this->toCamelCase($_GET['path']);
             $this->{$category}();
@@ -34,7 +40,6 @@ class ComputerPartsController implements Controller
             }
         }
 
-        //TODO -- get content from database
         //Find a way to create main category -> sub category relationship in database
     }
 
@@ -57,7 +62,7 @@ class ComputerPartsController implements Controller
     private function motherboards()
     {
         echo "<div class=\"row small-up-2 medium-up-5 large-up-3\" style='margin-top:10px;'>";
-        foreach (ProductModel::loadByCategoryId(2) as $motherboard) {
+        foreach (ProductModel::loadByCategoryId(self::MOTHERBOARDS_CATEGORY_ID) as $motherboard) {
             echo "<div class=\"column\" style='border: 1px solid black; padding: 10px; height: 400px;'>";
             HTMLGenerator::image("//placehold.it/150x150", "placeholder 150x150",
                 "float-center", "margin-bottom:30px");
