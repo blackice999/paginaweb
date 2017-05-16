@@ -83,8 +83,9 @@ class InformationsController implements Controller
         $this->showMenu();
 
         echo "<pre>";
-        $result = Mysql::getMany("users", "hunt_id",  ["id" => 1]);
+        $result = Mysql::getMany("users");
         var_dump($result);
+
 
         echo "<div class='large-5 medium-5 small-5 columns'>";
 
@@ -94,6 +95,13 @@ class InformationsController implements Controller
                     echo "<th> Last Name </th>";
                     echo "<th> Username </th>";
                     echo "<th> Email </th>";
+                echo "</tr>";
+
+                echo "<tr>";
+                    echo "<td> " . $result[0]['first_name'] . "</td>";
+                    echo "<td> " . $result[0]['last_name'] . "</td>";
+                    echo "<td> " . $result[0]['username'] . "</td>";
+                    echo "<td> " . $result[0]['email'] . "</td>";
                 echo "</tr>";
             echo "<table>";
         echo "</div>";

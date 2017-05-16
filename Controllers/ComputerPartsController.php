@@ -10,7 +10,6 @@ namespace Controllers;
 
 
 use Models\ProductModel;
-use Models\Mysql;
 use Models\ProductSpecModel;
 use Utils\HTMLGenerator;
 use Utils\StringUtils;
@@ -59,12 +58,11 @@ class ComputerPartsController implements Controller
     {
         echo "<div class=\"row small-up-2 medium-up-5 large-up-3\" style='margin-top:10px;'>";
         foreach (ProductModel::loadByCategoryId(2) as $motherboard) {
-            echo "<div class=\"column\" style='border: 1px solid black; padding: 10px; height: 400px;'>
-                 <img src=\"//placehold.it/150x150\" alt=\"\" class='float-center' style='margin-bottom: 30px;'>
-                <a href='motherboards/$motherboard->id' class='float-center text-center' style=' margin-bottom: 30px;'>";
-
-            echo $motherboard->name . "</a>";
-
+            echo "<div class=\"column\" style='border: 1px solid black; padding: 10px; height: 400px;'>";
+            HTMLGenerator::image("//placehold.it/150x150", "placeholder 150x150",
+                "float-center", "margin-bottom:30px");
+            HTMLGenerator::link("motherboards/" . $motherboard->id, $motherboard->name,
+                "float-center text-center", "margin-bottom:30px");
 
             echo " <ul>";
             foreach ($motherboard->getProductSpecModel() as $productSpecModel) {
@@ -74,7 +72,6 @@ class ComputerPartsController implements Controller
 
             HTMLGenerator::tag("h3", "$" . $motherboard->price);
             echo "</div>";
-
         }
 
         echo "</div>";

@@ -65,7 +65,8 @@ class HTMLGenerator
         echo "<a href='" . $href . "' class='" . $class . "' style='" . $style . "'>" . $content . "</a>";
     }
 
-    public static function image(string $src, string $alt, string $class="", string $style="") {
+    public static function image(string $src, string $alt, string $class = "", string $style = "")
+    {
         echo "<img src='" . $src . "' alt='" . $alt . "' class='" . $class . "' style='" . $style . "'>";
 
     }
