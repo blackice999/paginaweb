@@ -46,7 +46,7 @@ class PeripherialsController implements Controller
 
             $result = ProductModel::create($categoryId, "products", $name, $description, $price);
             HTMLGenerator::tag("p", "Inserted new " . StringUtils::toSingular($_GET['path']) . " with the id " . $result->id);
-            ProductSpecModel::create("product_specs", $result->id, $specName);
+            ProductSpecModel::create($result->id, $specName);
         }
     }
 

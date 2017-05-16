@@ -28,7 +28,7 @@ class ProductSpecModel extends ActiveRecord
         return new self($result);
     }
 
-    public static function create(string $tableName, int $productId, string $name) {
+    public static function create(int $productId, string $name) {
         $result = Mysql::insert("product_specs", ["product_id" => $productId, "name" => $name]);
         return self::loadById($result);
     }

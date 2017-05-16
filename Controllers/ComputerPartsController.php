@@ -47,9 +47,9 @@ class ComputerPartsController implements Controller
             $price = StringUtils::sanitizeString($_POST['price']);
             $specName = StringUtils::sanitizeString($_POST['spec_name']);
 
-            $result = ProductModel::create($categoryId,"products", $name, $description, $price);
-            HTMLGenerator::tag("p", "Inserted new " . StringUtils::toSingular($name) .  "with the id " . $result->id);
-            ProductSpecModel::create("product_specs", $result->id, $specName);
+            $result = ProductModel::create($categoryId, "products", $name, $description, $price);
+            HTMLGenerator::tag("p", "Inserted new " . StringUtils::toSingular($name) . "with the id " . $result->id);
+            ProductSpecModel::create($result->id, $specName);
         }
     }
 
@@ -59,8 +59,8 @@ class ComputerPartsController implements Controller
 
         echo "<div class=\"row small-up-2 medium-up-5 large-up-3\" style='margin-top:10px;'>";
 
-        if(empty(ProductModel::loadByCategoryId($categoryId))) {
-           HTMLGenerator::tag("h2", "No " . StringUtils::removeUnderscore($name) . " found");
+        if (empty(ProductModel::loadByCategoryId($categoryId))) {
+            HTMLGenerator::tag("h2", "No " . StringUtils::removeUnderscore($name) . " found");
         } else {
 
             foreach (ProductModel::loadByCategoryId($categoryId) as $category) {
