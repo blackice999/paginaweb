@@ -48,7 +48,7 @@ class ComputerPartsController implements Controller
             $specName = StringUtils::sanitizeString($_POST['spec_name']);
 
             $result = ProductModel::create($categoryId,"products", $name, $description, $price);
-            HTMLGenerator::tag("p", "Inserted new " . $this->toSingular($name) .  "with the id " . $result->id);
+            HTMLGenerator::tag("p", "Inserted new " . StringUtils::toSingular($name) .  "with the id " . $result->id);
             ProductSpecModel::create("product_specs", $result->id, $specName);
         }
     }
@@ -84,7 +84,7 @@ class ComputerPartsController implements Controller
         }
 
         HTMLGenerator::row(5, 5, 5);
-        HTMLGenerator::tag("h2", "Add a new " . StringUtils::removeUnderscore($this->toSingular($name)));
+        HTMLGenerator::tag("h2", "Add a new " . StringUtils::removeUnderscore(StringUtils::toSingular($name)));
         HTMLGenerator::form("post", $_GET['path'], [
             ["label" => "Name", "type" => "text", "name" => "name", "value" => ""],
             ["label" => "Description", "type" => "text", "name" => "description", "value" => ""],
@@ -93,18 +93,5 @@ class ComputerPartsController implements Controller
             ["label" => "", "type" => "submit", "name" => "submit", "value" => "Insert motherboard"]
         ]);
         HTMLGenerator::closeRow();
-    }
-
-    private function toSingular(string $category)
-    {
-        //Remove "s" from the end
-        $category = substr($category, 0, strlen($category) - 1);
-
-        //If the last two characters are "ie", convert them to "y"
-        if (substr($category, strlen($category) - 2) === "ie") {
-            $category = substr($category, 0, strlen($category) - 2) . "y";
-        }
-
-        return $category;
     }
 }

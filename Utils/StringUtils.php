@@ -22,4 +22,16 @@ class StringUtils
     public static function removeUnderscore(string $value) {
         return str_replace("_", " ", $value);
     }
+
+    public static function toSingular(string $value) {
+        //Remove "s" from the end
+        $category = substr($category, 0, strlen($category) - 1);
+
+        //If the last two characters are "ie", convert them to "y"
+        if (substr($category, strlen($category) - 2) === "ie") {
+            $category = substr($category, 0, strlen($category) - 2) . "y";
+        }
+
+        return $category;
+    }
 }
