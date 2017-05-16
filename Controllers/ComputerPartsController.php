@@ -28,19 +28,14 @@ class ComputerPartsController implements Controller
     public function get()
     {
         if (isset($_GET['path']) && $_GET['path'] !== "computer_parts") {
-            $category = $this->toCamelCase($_GET['path']);
-            $this->{$category}();
-
+            $this->{$_GET['path']}($_GET['path']);
         } else {
             foreach ($this->categories as $category) {
-
                 $titleFromLink = str_replace("_", " ", $category);
                 HTMLGenerator::tag("h3", ucfirst($titleFromLink));
                 HTMLGenerator::link($category, "Check all " . $titleFromLink);
             }
         }
-
-        //Find a way to create main category -> sub category relationship in database
     }
 
     public function post()
@@ -58,31 +53,32 @@ class ComputerPartsController implements Controller
         }
     }
 
-
-    private function motherboards()
+    public function __call($name, $arguments)
     {
+        $categoryId = constant("self::" . strtoupper($arguments[0]) . "_CATEGORY_ID");
+
         echo "<div class=\"row small-up-2 medium-up-5 large-up-3\" style='margin-top:10px;'>";
-        foreach (ProductModel::loadByCategoryId(self::MOTHERBOARDS_CATEGORY_ID) as $motherboard) {
+        foreach (ProductModel::loadByCategoryId($categoryId) as $category) {
             echo "<div class=\"column\" style='border: 1px solid black; padding: 10px; height: 400px;'>";
             HTMLGenerator::image("//placehold.it/150x150", "placeholder 150x150",
                 "float-center", "margin-bottom:30px");
-            HTMLGenerator::link("motherboards/" . $motherboard->id, $motherboard->name,
+            HTMLGenerator::link("motherboards/" . $category->id, $category->name,
                 "float-center text-center", "margin-bottom:30px");
 
             echo " <ul>";
-            foreach ($motherboard->getProductSpecModel() as $productSpecModel) {
+            foreach ($category->getProductSpecModel() as $productSpecModel) {
                 echo "<li>" . $productSpecModel->name . "</li>";
             }
             echo "</ul>";
 
-            HTMLGenerator::tag("h3", "$" . $motherboard->price);
+            HTMLGenerator::tag("h3", "$" . $category->price);
             echo "</div>";
         }
 
         echo "</div>";
 
         HTMLGenerator::row(5, 5, 5);
-        HTMLGenerator::tag("h2", "Add a new motherboard");
+        HTMLGenerator::tag("h2", "Add a new " . str_replace("_", " ", $this->toSingular($name)));
         HTMLGenerator::form("post", "motherboards", [
             ["label" => "Name", "type" => "text", "name" => "name", "value" => ""],
             ["label" => "Description", "type" => "text", "name" => "description", "value" => ""],
@@ -93,74 +89,16 @@ class ComputerPartsController implements Controller
         HTMLGenerator::closeRow();
     }
 
-    private function videoCards()
+    private function toSingular(string $category)
     {
-        echo "<div class=\"row small-up-2 medium-up-5 large-up-3\" style='margin-top:10px;'>";
-        foreach (ProductModel::loadByCategoryId(self::VIDEO_CARDS_CATEGORY_ID) as $motherboard) {
-            echo "<div class=\"column\" style='border: 1px solid black; padding: 10px; height: 400px;'>";
-            HTMLGenerator::image("//placehold.it/150x150", "placeholder 150x150",
-                "float-center", "margin-bottom:30px");
-            HTMLGenerator::link("motherboards/" . $motherboard->id, $motherboard->name,
-                "float-center text-center", "margin-bottom:30px");
+        //Remove "s" from the end
+        $category = substr($category, 0, strlen($category) - 1);
 
-            echo " <ul>";
-            foreach ($motherboard->getProductSpecModel() as $productSpecModel) {
-                echo "<li>" . $productSpecModel->name . "</li>";
-            }
-            echo "</ul>";
-
-            HTMLGenerator::tag("h3", "$" . $motherboard->price);
-            echo "</div>";
+        //If the last two characters are "ie", convert them to "y"
+        if (substr($category, strlen($category) - 2) === "ie") {
+            $category = substr($category, 0, strlen($category) - 2) . "y";
         }
-
-        echo "</div>";
-
-        HTMLGenerator::row(5, 5, 5);
-        HTMLGenerator::tag("h2", "Add a new video card");
-        HTMLGenerator::form("post", "motherboards", [
-            ["label" => "Name", "type" => "text", "name" => "name", "value" => ""],
-            ["label" => "Description", "type" => "text", "name" => "description", "value" => ""],
-            ["label" => "price", "type" => "text", "name" => "price", "value" => ""],
-            ["label" => "Specification name", "type" => "text", "name" => "spec_name", "value" => ""],
-            ["label" => "", "type" => "submit", "name" => "submit", "value" => "Insert motherboard"]
-        ]);
-        HTMLGenerator::closeRow();
-    }
-
-    private function processors()
-    {
-        echo "In processors";
-    }
-
-    private function ssds()
-    {
-        echo "In ssds";
-    }
-
-    private function hdds()
-    {
-        echo "In hdds";
-    }
-
-    private function powerSupplies()
-    {
-        echo "In power supplies";
-    }
-
-    private function chassis()
-    {
-        echo "In chassis";
-    }
-
-    private function toCamelCase(string $category)
-    {
-        $category = ucwords($category, "_");
-
-        //Remove "_" from the inside of the category
-        $category = str_replace("_", "", $category);
-        $category = lcfirst($category);
 
         return $category;
-
     }
 }
