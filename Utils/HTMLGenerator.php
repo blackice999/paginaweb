@@ -55,13 +55,14 @@ class HTMLGenerator
         echo "</form>";
     }
 
-    public static function tag(string $tagName, string $content, string $class = "")
+    public static function tag(string $tagName, string $content, string $class = "", $style = "")
     {
-        echo "<" . $tagName . " class='" . $class . "'>" . $content . "</" . $tagName . ">";
+        echo "<" . $tagName . " class='" . $class . "' style='" . $style . "'>" . $content . "</" . $tagName . ">";
     }
 
-    public static function link(string $href, string $content, string $class="") {
-        echo "<a href='" . $href . "' class='" . $class . "'>" . $content . "</a>";
+    public static function link(string $href, string $content, string $class = "", $style = "")
+    {
+        echo "<a href='" . $href . "' class='" . $class . "' style='" . $style . "'>" . $content . "</a>";
     }
 
 }
