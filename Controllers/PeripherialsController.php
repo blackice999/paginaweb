@@ -37,6 +37,17 @@ class PeripherialsController implements Controller
 
     public function post()
     {
+        if (isset($_POST['submit'])) {
+            $categoryId = constant("self::" . strtoupper($_GET['path']) . "_CATEGORY_ID");
+            $name = StringUtils::sanitizeString($_POST['name']);
+            $description = StringUtils::sanitizeString($_POST['description']);
+            $price = StringUtils::sanitizeString($_POST['price']);
+            $specName = StringUtils::sanitizeString($_POST['spec_name']);
+
+            $result = ProductModel::create($categoryId, "products", $name, $description, $price);
+            HTMLGenerator::tag("p", "Inserted new " . StringUtils::toSingular($_GET['path']) . " with the id " . $result->id);
+            ProductSpecModel::create("product_specs", $result->id, $specName);
+        }
     }
 
     public function __call($name, $arguments)
