@@ -17,10 +17,10 @@ use Utils\StringUtils;
 class PeripherialsController implements Controller
 {
     private $categories = ["monitors", "mice", "keyboards", "external_hdds"];
-    const MONITORS_CATEGORY_ID = 9;
-    const MICE_CATEGORY_ID = 10;
-    const KEYBOARDS_CATEGORY_ID = 11;
-    const EXTERNAL_HDDS_CATEGORY_ID = 12;
+    const MONITORS_CATEGORY_ID = 10;
+    const MICE_CATEGORY_ID = 11;
+    const KEYBOARDS_CATEGORY_ID = 12;
+    const EXTERNAL_HDDS_CATEGORY_ID = 13;
 
     public function get()
     {
@@ -37,7 +37,6 @@ class PeripherialsController implements Controller
 
     public function post()
     {
-
     }
 
     public function __call($name, $arguments)
