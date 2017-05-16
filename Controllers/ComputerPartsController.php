@@ -95,7 +95,36 @@ class ComputerPartsController implements Controller
 
     private function videoCards()
     {
-        echo "In video cards";
+        echo "<div class=\"row small-up-2 medium-up-5 large-up-3\" style='margin-top:10px;'>";
+        foreach (ProductModel::loadByCategoryId(self::VIDEO_CARDS_CATEGORY_ID) as $motherboard) {
+            echo "<div class=\"column\" style='border: 1px solid black; padding: 10px; height: 400px;'>";
+            HTMLGenerator::image("//placehold.it/150x150", "placeholder 150x150",
+                "float-center", "margin-bottom:30px");
+            HTMLGenerator::link("motherboards/" . $motherboard->id, $motherboard->name,
+                "float-center text-center", "margin-bottom:30px");
+
+            echo " <ul>";
+            foreach ($motherboard->getProductSpecModel() as $productSpecModel) {
+                echo "<li>" . $productSpecModel->name . "</li>";
+            }
+            echo "</ul>";
+
+            HTMLGenerator::tag("h3", "$" . $motherboard->price);
+            echo "</div>";
+        }
+
+        echo "</div>";
+
+        HTMLGenerator::row(5, 5, 5);
+        HTMLGenerator::tag("h2", "Add a new video card");
+        HTMLGenerator::form("post", "motherboards", [
+            ["label" => "Name", "type" => "text", "name" => "name", "value" => ""],
+            ["label" => "Description", "type" => "text", "name" => "description", "value" => ""],
+            ["label" => "price", "type" => "text", "name" => "price", "value" => ""],
+            ["label" => "Specification name", "type" => "text", "name" => "spec_name", "value" => ""],
+            ["label" => "", "type" => "submit", "name" => "submit", "value" => "Insert motherboard"]
+        ]);
+        HTMLGenerator::closeRow();
     }
 
     private function processors()
