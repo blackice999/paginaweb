@@ -18,4 +18,8 @@ class StringUtils
     public static function sanitizeString(string $value) {
         return filter_var($value, FILTER_SANITIZE_STRING);
     }
+
+    public static function removeUnderscore(string $value) {
+        return str_replace("_", " ", $value);
+    }
 }

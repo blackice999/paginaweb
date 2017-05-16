@@ -31,7 +31,7 @@ class ComputerPartsController implements Controller
             $this->{$_GET['path']}($_GET['path']);
         } else {
             foreach ($this->categories as $category) {
-                $titleFromLink = str_replace("_", " ", $category);
+                $titleFromLink = StringUtils::removeUnderscore($category);
                 HTMLGenerator::tag("h3", ucfirst($titleFromLink));
                 HTMLGenerator::link($category, "Check all " . $titleFromLink);
             }
@@ -78,7 +78,7 @@ class ComputerPartsController implements Controller
         echo "</div>";
 
         HTMLGenerator::row(5, 5, 5);
-        HTMLGenerator::tag("h2", "Add a new " . str_replace("_", " ", $this->toSingular($name)));
+        HTMLGenerator::tag("h2", "Add a new " . StringUtils::removeUnderscore($this->toSingular($name)));
         HTMLGenerator::form("post", "motherboards", [
             ["label" => "Name", "type" => "text", "name" => "name", "value" => ""],
             ["label" => "Description", "type" => "text", "name" => "description", "value" => ""],
