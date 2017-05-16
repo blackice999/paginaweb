@@ -40,15 +40,15 @@ class ComputerPartsController implements Controller
 
     public function post()
     {
-        echo $_GET['path'];
-        if (isset($_POST['submit']) && $_GET['path'] === "motherboards") {
+        if (isset($_POST['submit'])) {
+            $categoryId = constant("self::" . strtoupper($_GET['path']) . "_CATEGORY_ID");
             $name = StringUtils::sanitizeString($_POST['name']);
             $description = StringUtils::sanitizeString($_POST['description']);
             $price = StringUtils::sanitizeString($_POST['price']);
             $specName = StringUtils::sanitizeString($_POST['spec_name']);
 
-            $result = ProductModel::create("products", $name, $description, $price);
-            HTMLGenerator::tag("p", "Inserted new motherboard with the id " . $result->id);
+            $result = ProductModel::create($categoryId,"products", $name, $description, $price);
+            HTMLGenerator::tag("p", "Inserted new " . $this->toSingular($name) .  "with the id " . $result->id);
             ProductSpecModel::create("product_specs", $result->id, $specName);
         }
     }
@@ -85,7 +85,7 @@ class ComputerPartsController implements Controller
 
         HTMLGenerator::row(5, 5, 5);
         HTMLGenerator::tag("h2", "Add a new " . StringUtils::removeUnderscore($this->toSingular($name)));
-        HTMLGenerator::form("post", "motherboards", [
+        HTMLGenerator::form("post", $_GET['path'], [
             ["label" => "Name", "type" => "text", "name" => "name", "value" => ""],
             ["label" => "Description", "type" => "text", "name" => "description", "value" => ""],
             ["label" => "price", "type" => "text", "name" => "price", "value" => ""],

@@ -40,8 +40,8 @@ class ProductModel extends ActiveRecord
         return $this->productSpecModel;
     }
 
-    public static function create(string $tableName, string $name, string $description, string $price) {
-        $result = Mysql::insert($tableName, ["category_id" => 2, "name" => $name, "description" => $description, "price" => $price]);
+    public static function create(int $categoryId, string $tableName, string $name, string $description, string $price) {
+        $result = Mysql::insert($tableName, ["category_id" => $categoryId, "name" => $name, "description" => $description, "price" => $price]);
         return self::loadById($result);
 
     }
