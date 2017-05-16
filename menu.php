@@ -28,13 +28,13 @@
                 <ul class="menu vertical">
                     <li><a href="<?php echo $rootPath; ?>monitors">Monitors</a></li>
                     <li><a href="<?php echo $rootPath; ?>mice">Mice</a></li>
-                    <li><a href="<?php echo $rootPath; ?>keyboards">Keyboardss</a></li>
+                    <li><a href="<?php echo $rootPath; ?>keyboards">Keyboards</a></li>
                     <li><a href="<?php echo $rootPath; ?>external_hdds">External HDDs</a></li>
                 </ul>
             </li>
             <li><a href="<?php echo $rootPath; ?>software">Software</a>
                 <ul class="menu vertical">
-                    <li><a href="<?php echo $rootPath; ?>operating_system">Operating systems</a></li>
+                    <li><a href="<?php echo $rootPath; ?>operating_systems">Operating systems</a></li>
                     <li><a href="<?php echo $rootPath; ?>office_apps">Office applications</a></li>
                     <li><a href="<?php echo $rootPath; ?>security_solutions">Security solutions</a></li>
                 </ul>
