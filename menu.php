@@ -1,91 +1,82 @@
-<?php $rootPath = "/paginaweb/" ?>
-<div class="row">
+<?php
+$menu = [
+    "computer_parts" => [
+        ["motherboards", "video_cards", "processors", "ssds", "hdds", "power_supplies", "chassis"],
+    ],
+    "peripherials" => [
+        ["monitors", "mice", "keyboards", "external_hdds"]
+    ],
+    "software" => [
+        ["operating_systems", "office_apps", "security_solutions"]
+    ],
+    "telephones" => [
+        ["smartphones", "smartwatches", "external_batteries",
+            "gsm_accessories" => [
+                ["selfie_sticks", "memory_cards", "chargers", "wireless_chargers"]
+            ]
+        ]
+    ],
+    "audio_photo" => [
+        ["speakers" => [
+            ["portable_speakers"]
+        ], "microphones",
+            "cameras" => [
+                ["d_slr", "compact", "bridge"]
+            ]
+        ]
+    ],
+    "informations" => [[]],
+    "contact" => [[]],
+    "account" => [[]],
+    "log_in" => [[]],
+    "log_out" => [[]],
+    "register" => [[]]
+];
 
-    <div class="large-10 medium-10 small-10 small-centered medium-centered large-centered columns">
-        <a href="<?php echo $rootPath; ?>index">
-            <img class="float-center" src="<?php echo $rootPath; ?>img/workstation-147953_960_720.png"
-                 style="width: 30%; height: 30%;">
-        </a>
+$rootPath = "/paginaweb/";
 
-        <div class="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium">
-            <button class="menu-icon" type="button" data-toggle="example-menu"></button>
-            <div class="title-bar-title">Menu</div>
-        </div>
+$test = [
+    "informations" => [[]]
+];
 
-        <ul class="dropdown menu" data-dropdown-menu id="example-menu">
-            <li><a href="<?php echo $rootPath; ?>computer_parts">Computer parts</a>
-                <ul class="menu vertical">
-                    <li><a href="<?php echo $rootPath; ?>motherboards">Motherboards</a></li>
-                    <li><a href="<?php echo $rootPath; ?>video_cards">Video cards</a></li>
-                    <li><a href="<?php echo $rootPath; ?>processors">Processors</a></li>
-                    <li><a href="<?php echo $rootPath; ?>ssds">SSDs</a></li>
-                    <li><a href="<?php echo $rootPath; ?>hdds">HDDs</a></li>
-                    <li><a href="<?php echo $rootPath; ?>power_supplies">Power supplies</a></li>
-                    <li><a href="<?php echo $rootPath; ?>chassis">Chassis</a></li>
-                </ul>
-            </li>
-            <li><a href="<?php echo $rootPath; ?>peripherials">Peripherials</a>
-                <ul class="menu vertical">
-                    <li><a href="<?php echo $rootPath; ?>monitors">Monitors</a></li>
-                    <li><a href="<?php echo $rootPath; ?>mice">Mice</a></li>
-                    <li><a href="<?php echo $rootPath; ?>keyboards">Keyboards</a></li>
-                    <li><a href="<?php echo $rootPath; ?>external_hdds">External HDDs</a></li>
-                </ul>
-            </li>
-            <li><a href="<?php echo $rootPath; ?>software">Software</a>
-                <ul class="menu vertical">
-                    <li><a href="<?php echo $rootPath; ?>operating_systems">Operating systems</a></li>
-                    <li><a href="<?php echo $rootPath; ?>office_apps">Office applications</a></li>
-                    <li><a href="<?php echo $rootPath; ?>security_solutions">Security solutions</a></li>
-                </ul>
-            </li>
-            <li><a href="<?php echo $rootPath; ?>telephones">Telephones</a>
-                <ul class="menu vertical">
-                    <li><a href="<?php echo $rootPath; ?>smartphones">Smartphones</a></li>
-                    <li><a href="<?php echo $rootPath; ?>smartwatches">Smartwatches</a></li>
-                    <li><a href="<?php echo $rootPath; ?>external_batteries"> External batteries</a></li>
-                    <li><a href="<?php echo $rootPath; ?>gsm_accessories">GSM accesories</a>
-                        <ul class="menu vertical">
-                            <li><a href="<?php echo $rootPath; ?>gsm_accessories/selfie_sticks">Selfie sticks</a></li>
-                            <li><a href="<?php echo $rootPath; ?>gsm_accessories/memory_cards">Memory cards</a></li>
-                            <li><a href="<?php echo $rootPath; ?>gsm_accessories/chargers">Chargers</a></li>
-                            <li><a href="<?php echo $rootPath; ?>gsm_accessories/wireless_chargers">Wireless
-                                    chargers</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li><a href="<?php echo $rootPath; ?>audio_photo">Audio Photo/video</a>
-                <ul class="menu vertical">
-                    <li><a href="<?php echo $rootPath; ?>speakers">Speakers</a>
-                        <ul class="menu vertical">
-                            <li><a href="<?php echo $rootPath; ?>speakers/portable_speakers">Portable speakers</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="<?php echo $rootPath; ?>microphones">Microphones</a></li>
-                    <li><a href="<?php echo $rootPath; ?>microphones">Cameras</a>
-                        <ul class="menu vertical">
-                            <li><a href="<?php echo $rootPath; ?>cameras/d_slr">D-SLR Cameras</a></li>
-                            <li><a href="<?php echo $rootPath; ?>cameras/compact">Compact Cameras</a></li>
-                            <li><a href="<?php echo $rootPath; ?>cameras/bridge">Bridge Cameras</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li><a href="<?php echo $rootPath; ?>informations">Informations</a></li>
-            <li><a href="<?php echo $rootPath; ?>contact">Contact</a></li>
-            <li><a href="<?php echo $rootPath; ?>account">My account</a></li>
+echo " <div class=\"large-10 medium-10 small-10 small-centered medium-centered large-centered columns\">";
+\Utils\HTMLGenerator::link($rootPath . "index",
+    \Utils\HTMLGenerator::image($rootPath . "img/workstation-147953_960_720.png", "", "float-center", "width: 30%; height: 30%;"));
+echo " <ul class=\"dropdown menu\" data-dropdown-menu id=\"example-menu\">";
+foreach ($menu as $menuItem => $item) {
+    echo "<li>" . \Utils\HTMLGenerator::link($rootPath . $menuItem, ucfirst(\Utils\StringUtils::removeUnderscore($menuItem)));
+//    echo "<li><a href='" . $rootPath . $menuItem . "'>" . ucfirst(\Utils\StringUtils::removeUnderscore($menuItem)) . "</a>";
+    foreach ($item as $key => $value) {
+        if (!empty($value)) {
+            echo "<ul class='menu vertical'>";
+            foreach ($value as $subcategory => $subsub) {
+                if (is_array($subsub)) {
+                    //Displays the key for the subsubcategories, like GSm accssories
+//                echo "<li>" . \Utils\HTMLGenerator::link($rootPath . $subcategory, ucfirst(\Utils\StringUtils::removeUnderscore($subcategory)));
+                    echo "<li><a href='" . $rootPath . $subcategory . "'>" . ucfirst(\Utils\StringUtils::removeUnderscore($subcategory)) . "</a>";
+                    foreach ($subsub as $subsubsub => $keys) {
+                        echo "<ul class='menu vertical'>";
+                        foreach ($keys as $item) {
+//                        echo "<li>" . \Utils\HTMLGenerator::link($rootPath . $item, ucfirst(\Utils\StringUtils::removeUnderscore($item))) . "</li>";
+                            echo "<li><a href='" . $rootPath . $item . "'>" . ucfirst(\Utils\StringUtils::removeUnderscore($item)) . "</a></li>";
+                        }
+                        echo "</ul>";
+                    }
+                    echo "</li>";
+                } else {
+//                echo "<li> " . \Utils\HTMLGenerator::link($rootPath . $subsub, ucfirst(\Utils\StringUtils::removeUnderscore($subsub))) . "</li>";
+                    echo "<li><a href='" . $rootPath . $subsub . "'>" . ucfirst(\Utils\StringUtils::removeUnderscore($subsub)) . "</a></li>";
+                }
+            }
+            echo "</ul>";
+        }
+    }
+    echo "</li>";
+}
+echo "</ul>";
+echo "</div>";
 
-            <!-- Show login link if user is not logged in, register link otherwise -->
-            <?php if (!isset($_SESSION['userId'])) { ?>
-                <li><a href="<?php echo $rootPath; ?>log_in">Log In</a></li>
-            <?php } else { ?>
-                <li><a href="<?php echo $rootPath; ?>log_out">Log out</a></li>
-            <?php } ?>
-            <li><a href="<?php echo $rootPath; ?>register">Register</a></li>
-        </ul>
-    </div>
-</div>
+?>
 
 <script src="<?php echo $rootPath; ?>js/vendor/jquery.js"></script>
 <script src="<?php echo $rootPath; ?>js/vendor/foundation.js"></script>
