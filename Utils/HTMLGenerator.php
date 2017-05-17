@@ -62,12 +62,12 @@ class HTMLGenerator
 
     public static function link(string $href, string $content, string $class = "", $style = "")
     {
-        echo "<a href='" . $href . "' class='" . $class . "' style='" . $style . "'>" . $content . "</a>";
+        return "<a href='" . $href . "' class='" . $class . "' style='" . $style . "'>" . $content . "</a>";
     }
 
     public static function image(string $src, string $alt, string $class = "", string $style = "")
     {
-        echo "<img src='" . $src . "' alt='" . $alt . "' class='" . $class . "' style='" . $style . "'>";
+        return "<img src='" . $src . "' alt='" . $alt . "' class='" . $class . "' style='" . $style . "'>";
 
     }
 
