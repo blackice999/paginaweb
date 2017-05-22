@@ -29,7 +29,7 @@ class SoftwareController implements Controller
             foreach ($this->categories as $category) {
                 $titleFromLink = StringUtils::removeUnderscore($category);
                 HTMLGenerator::tag("h3", ucfirst($titleFromLink));
-                HTMLGenerator::link($category, "Check all " . $titleFromLink);
+                echo HTMLGenerator::link($category, "Check all " . $titleFromLink);
             }
         }
     }
@@ -63,9 +63,9 @@ class SoftwareController implements Controller
 
             foreach (ProductModel::loadByCategoryId($categoryId) as $category) {
                 echo "<div class=\"column\" style='border: 1px solid black; padding: 10px; height: 400px;'>";
-                HTMLGenerator::image("//placehold.it/150x150", "placeholder 150x150",
+                echo HTMLGenerator::image("//placehold.it/150x150", "placeholder 150x150",
                     "float-center", "margin-bottom:30px");
-                HTMLGenerator::link("motherboards/" . $category->id, $category->name,
+                echo HTMLGenerator::link("motherboards/" . $category->id, $category->name,
                     "float-center text-center", "margin-bottom:30px");
 
                 echo " <ul>";
