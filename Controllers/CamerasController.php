@@ -24,7 +24,7 @@ class CamerasController implements Controller
 
     public function get()
     {
-        if (isset($_GET['path']) && $_GET['path'] !== "speakers") {
+        if (isset($_GET['path']) && $_GET['path'] !== "cameras") {
             $this->{$_GET['path']}($_GET['path']);
         } else {
             foreach ($this->categories as $category) {
