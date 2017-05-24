@@ -93,8 +93,5 @@ class GSMAccessoriesController implements Controller
             ["label" => "", "type" => "submit", "name" => "submit", "value" => "Insert motherboard"]
         ]);
         HTMLGenerator::closeRow();
-
-
-        echo $name;
     }
 }
