@@ -32,7 +32,6 @@ class Router
     public function processRequest(string $path)
     {
         if ($this->isMainCategory($path)) {
-            echo "yes";
             $this->generateClassFromPath($path);
         } else {
             //Will return, for example, "computer_parts" if the subcategory is "motherboards"

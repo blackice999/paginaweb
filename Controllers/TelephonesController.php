@@ -18,7 +18,6 @@ class TelephonesController implements Controller
 {
 
     private $categories = ["smartphones", "smartwatches", "external_batteries", "selfie_sticks", "memory_cards", "chargers", "wireless_chargers"];
-    private $gsmAccessoriesCategories = ["selfie_sticks", "memory_cards", "chargers", "wireless_chargers"];
     const SMARTPHONES_CATEGORY_ID = 19;
     const SMARTWATCHES_CATEGORY_ID = 20;
     const EXTERNAL_BATTERIES_CATEGORY_ID = 21;
@@ -54,20 +53,45 @@ class TelephonesController implements Controller
         }
     }
 
-
     public function __call($name, $arguments)
     {
-//        if ($name !== "gsm_accessories") {
-//            $this->{$name}($name);
-//        } else {
-//            foreach ($this->gsmAccessoriesCategories as $category) {
-//                $titleFromLink = StringUtils::removeUnderscore($category);
-//                HTMLGenerator::tag("h3", ucfirst($titleFromLink));
-//                echo HTMLGenerator::link($category, "Check all " . $titleFromLink);
-//            }
-//        }
+        $categoryId = constant("self::" . strtoupper($arguments[0]) . "_CATEGORY_ID");
 
+        echo "<div class=\"row small-up-2 medium-up-5 large-up-3\" style='margin-top:10px;'>";
 
-//        echo $name;
+        if (empty(ProductModel::loadByCategoryId($categoryId))) {
+            HTMLGenerator::tag("h2", "No " . StringUtils::removeUnderscore($name) . " found");
+        } else {
+
+            foreach (ProductModel::loadByCategoryId($categoryId) as $category) {
+                echo "<div class=\"column\" style='border: 1px solid black; padding: 10px; height: 400px;'>";
+                echo HTMLGenerator::image("//placehold.it/150x150", "placeholder 150x150",
+                    "float-center", "margin-bottom:30px");
+                echo HTMLGenerator::link("motherboards/" . $category->id, $category->name,
+                    "float-center text-center", "margin-bottom:30px");
+
+                echo " <ul>";
+                foreach ($category->getProductSpecModel() as $productSpecModel) {
+                    echo "<li>" . $productSpecModel->name . "</li>";
+                }
+                echo "</ul>";
+
+                HTMLGenerator::tag("h3", "$" . $category->price);
+                echo "</div>";
+            }
+
+            echo "</div>";
+        }
+
+        HTMLGenerator::row(5, 5, 5);
+        HTMLGenerator::tag("h2", "Add a new " . StringUtils::removeUnderscore(StringUtils::toSingular($name)));
+        HTMLGenerator::form("post", $_GET['path'], [
+            ["label" => "Name", "type" => "text", "name" => "name", "value" => ""],
+            ["label" => "Description", "type" => "text", "name" => "description", "value" => ""],
+            ["label" => "price", "type" => "text", "name" => "price", "value" => ""],
+            ["label" => "Specification name", "type" => "text", "name" => "spec_name", "value" => ""],
+            ["label" => "", "type" => "submit", "name" => "submit", "value" => "Insert motherboard"]
+        ]);
+        HTMLGenerator::closeRow();
     }
 }
