@@ -22,7 +22,7 @@ class Router
                     "selfie_sticks", "memory_cards", "chargers", "wireless_chargers"
                 ]
         ],
-        "audio_photo" => ["speakers" => ["portable_speakers"], "microphones", "cameras" => ["d_slr", "compact", "bridge"]],
+        "audio_photo" => ["speakers" => ["portable_speakers"], "microphones", "cameras" => ["d_slrs", "compacts", "bridges"]],
         "informations" => [],
         "contact" => [],
         "account" => [],

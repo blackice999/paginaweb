@@ -21,7 +21,7 @@ $menu = [
             ["portable_speakers"]
         ], "microphones",
             "cameras" => [
-                ["d_slr", "compact", "bridge"]
+                ["d_slrs", "compacts", "bridges"]
             ]
         ]
     ],

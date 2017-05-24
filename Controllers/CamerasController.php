@@ -17,10 +17,10 @@ use Utils\StringUtils;
 class CamerasController implements Controller
 {
 
-    private $categories = ["d_slr", "compact", "bridge"];
-    const D_SLR_CATEGORY_ID = 36;
-    const COMPACT_CATEGORY_ID = 37;
-    const BRIDGE_CATEGORY_ID = 38;
+    private $categories = ["d_slrs", "compacts", "bridges"];
+    const D_SLRS_CATEGORY_ID = 36;
+    const COMPACTS_CATEGORY_ID = 37;
+    const BRIDGES_CATEGORY_ID = 38;
 
     public function get()
     {
