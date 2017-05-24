@@ -9,6 +9,8 @@
 namespace Controllers;
 
 
+use Models\ProductModel;
+use Models\ProductSpecModel;
 use Utils\HTMLGenerator;
 use Utils\StringUtils;
 
@@ -20,7 +22,7 @@ class SpeakersController implements Controller
 
     public function get()
     {
-        if (isset($_GET['path']) && $_GET['path'] !== "audio_photo") {
+        if (isset($_GET['path']) && $_GET['path'] !== "speakers") {
             $this->{$_GET['path']}($_GET['path']);
         } else {
             foreach ($this->categories as $category) {
@@ -33,6 +35,18 @@ class SpeakersController implements Controller
 
     public function post()
     {
-        // TODO: Implement post() method.
+        if (isset($_POST['submit'])) {
+            $categoryId = constant("self::" . strtoupper($_GET['path']) . "_CATEGORY_ID");
+            $name = StringUtils::sanitizeString($_POST['name']);
+            $description = StringUtils::sanitizeString($_POST['description']);
+            $price = StringUtils::sanitizeString($_POST['price']);
+            $specName = StringUtils::sanitizeString($_POST['spec_name']);
+
+            $result = ProductModel::create($categoryId, "products", $name, $description, $price);
+            HTMLGenerator::tag("p", "Inserted new " .
+                StringUtils::removeUnderscore(StringUtils::toSingular($_GET['path'])) .
+                " with the id " . $result->id);
+            ProductSpecModel::create($result->id, $specName);
+        }
     }
 }
