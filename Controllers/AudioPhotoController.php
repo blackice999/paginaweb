@@ -17,7 +17,7 @@ use Utils\StringUtils;
 class AudioPhotoController implements Controller
 {
 
-    private $categories = ["speakers", "portable_speakers", "microphones", "cameras", "d_slr", "compact", "bridge"];
+    private $categories = ["speakers", "portable_speakers", "microphones", "cameras", "d_slrs", "compacts", "bridges"];
     const SPEAKERS_CATEGORY_ID = 31;
     const MICROPHONES_CATEGORY_ID = 32;
     const CAMERAS_CATEGORY_ID = 33;
