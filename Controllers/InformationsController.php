@@ -10,6 +10,7 @@ namespace Controllers;
 
 
 use Models\Mysql;
+use Utils\HTMLGenerator;
 
 class InformationsController implements Controller
 {
@@ -67,7 +68,6 @@ class InformationsController implements Controller
         if (isset($_POST['login'])) {
             $username = $_POST['username'];
 
-
             // FIX - Will always return true even if the value does not exist
             var_dump(Mysql::delete("users", ["username" => $username]));
             if((Mysql::delete("users", ["username" => $username]))) {
@@ -114,12 +114,11 @@ class InformationsController implements Controller
         echo "<ul class='vertical menu'>";
         foreach (self::$menu as $mainLinks => $mainTitles) {
             foreach ($mainTitles as $title => $subLinks) {
-                echo "<li><a href=$mainLinks style='background-color: #D0D0D0;'>$title</a></li>";
+                echo "<li>" . HTMLGenerator::link($mainLinks, $title, "", "background-color:#D0D0D0") . "</li>";
                 foreach ($subLinks as $link => $value) {
-                    echo "<ul class='nested vertical menu'>
-                             <li><a href=$link>$value</a></li>
-                        </ul>";
-
+                    echo "<ul class='nested vertical menu'>";
+                             echo "<li>" . HTMLGenerator::link($link, $value) . "</li>";
+                        echo "</ul>";
                 }
             }
         }
