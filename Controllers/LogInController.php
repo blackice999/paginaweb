@@ -64,6 +64,7 @@ class LogInController implements Controller
                 HTMLGenerator::tag("h2","Successfully logged in");
                 HTMLGenerator::closeRow();
                 $_SESSION['userId'] = $userModel->id;
+                header("Location: index");
 
             }
         }
