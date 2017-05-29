@@ -121,9 +121,15 @@ class ContactController implements Controller
 
     private function displaySocialMediaLinks() {
         echo "<div class='large-5 medium-3 small-3 columns'>";
-        echo "<div class='callout'>";
-            HTMLGenerator::image("https://placehold.it/100x100", "facebook");
-        echo "</div>";
+                    echo HTMLGenerator::link("#",HTMLGenerator::image("https://placehold.it/100x100", "facebook"));
+                    HTMLGenerator::tag("span", "Facebook");
+                    HTMLGenerator::tag("br", "");
+                    echo HTMLGenerator::link("#",HTMLGenerator::image("https://placehold.it/100x100", "twitter"));
+                    HTMLGenerator::tag("span", "Twitter");
+                    HTMLGenerator::tag("br", "");
+
+                    echo HTMLGenerator::link("#",HTMLGenerator::image("https://placehold.it/100x100", "instagram"));
+                    HTMLGenerator::tag("span", "Instagram");
         echo "</div>";
     }
 }
