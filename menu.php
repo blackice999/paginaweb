@@ -44,7 +44,15 @@ echo \Utils\HTMLGenerator::link($rootPath . "index",
     \Utils\HTMLGenerator::image($rootPath . "img/workstation-147953_960_720.png", "", "float-center", "width: 30%; height: 30%;"));
 echo " <ul class=\"dropdown menu\" data-dropdown-menu id=\"example-menu\">";
 foreach ($menu as $menuItem => $item) {
-    echo "<li>" . \Utils\HTMLGenerator::link($rootPath . $menuItem, ucfirst(\Utils\StringUtils::removeUnderscore($menuItem)));
+
+    echo "<li>";
+    if ($menuItem === "account" || $menuItem === "log_out") {
+        if (isset($_SESSION['userId'])) {
+            echo \Utils\HTMLGenerator::link($rootPath . $menuItem, ucfirst(\Utils\StringUtils::removeUnderscore($menuItem)));
+        }
+    } else {
+        echo \Utils\HTMLGenerator::link($rootPath . $menuItem, ucfirst(\Utils\StringUtils::removeUnderscore($menuItem)));
+    }
     foreach ($item as $key => $value) {
         if (!empty($value)) {
             echo "<ul class='menu vertical'>";
