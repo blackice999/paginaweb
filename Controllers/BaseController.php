@@ -53,15 +53,19 @@ abstract class BaseController implements Controller
         }
     }
 
-    public function insertNewProduct($name) {
-        HTMLGenerator::row(5, 5, 5);
-        HTMLGenerator::tag("h2", "Add a new " . StringUtils::removeUnderscore(StringUtils::toSingular($name)));
-        HTMLGenerator::form("post", $_GET['path'], [
-            ["label" => "Name", "type" => "text", "name" => "name", "value" => ""],
-            ["label" => "Description", "type" => "text", "name" => "description", "value" => ""],
-            ["label" => "price", "type" => "text", "name" => "price", "value" => ""],
-            ["label" => "Specification name", "type" => "text", "name" => "spec_name", "value" => ""],
-            ["label" => "", "type" => "submit", "name" => "submit", "value" => "Insert motherboard"]
-        ]);
+    public function insertNewProduct($name)
+    {
+
+        if (isset($_SESSION['userId'])) {
+            HTMLGenerator::row(5, 5, 5);
+            HTMLGenerator::tag("h2", "Add a new " . StringUtils::removeUnderscore(StringUtils::toSingular($name)));
+            HTMLGenerator::form("post", $_GET['path'], [
+                ["label" => "Name", "type" => "text", "name" => "name", "value" => ""],
+                ["label" => "Description", "type" => "text", "name" => "description", "value" => ""],
+                ["label" => "price", "type" => "text", "name" => "price", "value" => ""],
+                ["label" => "Specification name", "type" => "text", "name" => "spec_name", "value" => ""],
+                ["label" => "", "type" => "submit", "name" => "submit", "value" => "Insert motherboard"]
+            ]);
+        }
     }
 }
