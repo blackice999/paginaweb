@@ -66,13 +66,17 @@ class ContactController implements Controller
 
 
         HTMLGenerator::tag("h2", "Working hours");
-        $this->displayWorkingHoursTable();
+        $this->displayWorkingHours();
 
         echo "<div class='large-10 medium-3 small-3 columns'>";
         HTMLGenerator::tag("h3", "News and client support on social networks");
         echo "</div>";
 
         $this->displaySocialMediaLinks();
+        echo "<div class='large-10 medium-3 small-3 columns'>";
+        HTMLGenerator::tag("h3", "Contact details");
+        echo "</div>";
+        $this->displayContactDetails();
     }
 
     public function post()
@@ -99,7 +103,7 @@ class ContactController implements Controller
         echo "</div>";
     }
 
-    private function displayWorkingHoursTable() {
+    private function displayWorkingHours() {
         echo "<div class='large-5 medium-3 small-3 columns'>";
         echo "<table>";
             echo "<tr>";
@@ -131,5 +135,26 @@ class ContactController implements Controller
                     echo HTMLGenerator::link("#",HTMLGenerator::image("https://placehold.it/100x100", "instagram"));
                     HTMLGenerator::tag("span", "Instagram");
         echo "</div>";
+    }
+
+    private function displayContactDetails() {
+        echo "<div class='large-5 medium-3 small-3 columns'>";
+        echo "<table>";
+             echo "<tr>";
+                echo "<td> Adress contact:</td>";
+                echo "<td> George Cosbuc str. 30/20 Baia Mare</td>";
+             echo "</tr>";
+
+            echo "<tr>";
+              echo "<td> GPS coordinates: </td>";
+              echo "<td> Latitude:100,425341 Longitude: 45,325439</td>";
+             echo "</tr>";
+             echo "<tr>";
+                 echo "<td>Call center telephone:	 </td>";
+                 echo "<td> 023 343 56 76</td>";
+             echo "</tr>";
+        echo "</table>";
+        echo "</div>";
+
     }
 }
