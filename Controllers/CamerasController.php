@@ -18,9 +18,9 @@ class CamerasController implements Controller
 {
 
     private $categories = ["d_slrs", "compacts", "bridges"];
-    const D_SLRS_CATEGORY_ID = 36;
-    const COMPACTS_CATEGORY_ID = 37;
-    const BRIDGES_CATEGORY_ID = 38;
+    const D_SLRS_CATEGORY_ID = 32;
+    const COMPACTS_CATEGORY_ID = 33;
+    const BRIDGES_CATEGORY_ID = 34;
 
     public function get()
     {

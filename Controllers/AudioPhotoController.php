@@ -18,9 +18,9 @@ class AudioPhotoController implements Controller
 {
 
     private $categories = ["speakers", "portable_speakers", "microphones", "cameras", "d_slrs", "compacts", "bridges"];
-    const SPEAKERS_CATEGORY_ID = 31;
-    const MICROPHONES_CATEGORY_ID = 32;
-    const CAMERAS_CATEGORY_ID = 33;
+    const SPEAKERS_CATEGORY_ID = 28;
+    const MICROPHONES_CATEGORY_ID = 29;
+    const CAMERAS_CATEGORY_ID = 30;
 
     public function get()
     {

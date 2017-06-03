@@ -18,7 +18,7 @@ class SpeakersController implements Controller
 {
 
     private $categories = ["portable_speakers"];
-    const PORTABLE_SPEAKERS_CATEGORY_ID = 35;
+    const PORTABLE_SPEAKERS_CATEGORY_ID = 31;
 
     public function get()
     {
