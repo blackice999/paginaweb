@@ -14,7 +14,7 @@ use Models\ProductSpecModel;
 use Utils\HTMLGenerator;
 use Utils\StringUtils;
 
-class PeripherialsController implements Controller
+class PeripherialsController extends BaseController implements Controller
 {
     private $categories = ["monitors", "mice", "keyboards", "external_hdds"];
     const MONITORS_CATEGORY_ID = 10;
@@ -58,29 +58,7 @@ class PeripherialsController implements Controller
 
         echo "<div class=\"row small-up-2 medium-up-5 large-up-3\" style='margin-top:10px;'>";
 
-        if (empty(ProductModel::loadByCategoryId($categoryId))) {
-            HTMLGenerator::tag("h2", "No " . StringUtils::removeUnderscore($name) . " found");
-        } else {
-
-            foreach (ProductModel::loadByCategoryId($categoryId) as $category) {
-                echo "<div class=\"column\" style='border: 1px solid black; padding: 10px; height: 400px;'>";
-                echo HTMLGenerator::image("//placehold.it/150x150", "placeholder 150x150",
-                    "float-center", "margin-bottom:30px");
-                echo HTMLGenerator::link("motherboards/" . $category->id, $category->name,
-                    "float-center text-center", "margin-bottom:30px");
-
-                echo " <ul>";
-                foreach ($category->getProductSpecModel() as $productSpecModel) {
-                    echo "<li>" . $productSpecModel->name . "</li>";
-                }
-                echo "</ul>";
-
-                HTMLGenerator::tag("h3", "$" . $category->price);
-                echo "</div>";
-            }
-
-            echo "</div>";
-        }
+        $this->displayProducts($categoryId, $name);
 
         HTMLGenerator::row(5, 5, 5);
         HTMLGenerator::tag("h2", "Add a new " . StringUtils::removeUnderscore(StringUtils::toSingular($name)));
