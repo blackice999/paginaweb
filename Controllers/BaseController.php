@@ -36,7 +36,7 @@ abstract class BaseController implements Controller
                 echo "<div class=\"column\" style='border: 1px solid black; padding: 10px; height: 400px;'>";
                 echo HTMLGenerator::image("//placehold.it/150x150", "placeholder 150x150",
                     "float-center", "margin-bottom:30px");
-                echo HTMLGenerator::link("motherboards/" . $category->id, $category->name,
+                echo HTMLGenerator::link("product/" . $category->id, $category->name,
                     "float-center text-center", "margin-bottom:30px");
 
                 echo " <ul>";
