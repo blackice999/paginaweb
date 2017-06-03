@@ -33,60 +33,15 @@ foreach (explode("/", $_SERVER['REQUEST_URI']) as $part) {
 
 $router = new Router($path);
 $router->processRequest($path);
-
-
-if ($path === "account"):
-    //If not logged in, show login form
-    ?>
-
-    <?php
-    //else show register form
-//        else:
-    ?>
-    <div class="row">
-        <div class="large-10 columns">
-            <h2> Register </h2>
-            <form method="post" action="register">
-                <label>
-                    Full name
-                    <input type="text" name="name">
-                </label>
-                <label>
-                    Address
-                    <input type="text" name="address">
-                </label>
-                <label>
-                    Username
-                    <input type="text" name="username">
-                </label>
-                <label>
-                    Email
-                    <input type="text" name="email">
-                </label>
-                <label>
-                    Password
-                    <input type="password" name="password">
-                </label>
-                <label>
-                    Repeat password
-                    <input type="password" name="repeat_password">
-                </label>
-                <input type="submit" class="button" value="Register" name="register">
-            </form>
-        </div>
-    </div>
-<?php endif;
 ob_end_flush();
 ?>
 
 <script>
     $(document).foundation();
-
     path = window.location.pathname;
 
     //Search all the elements with the attribute href having the value of path given
     var matches = document.querySelector("[href='" + path + "']");
-
     $(matches).parents("[role='menuitem']:last").addClass("active");
 </script>
 </body>
