@@ -11,6 +11,7 @@ namespace Models;
 
 class ProductSpecModel extends ActiveRecord
 {
+    protected $productSpecDescriptionModel;
 
     public static function loadByProductId(int $id) {
         $results = Mysql::getMany("product_specs", ['product_id' => $id]);
@@ -28,6 +29,14 @@ class ProductSpecModel extends ActiveRecord
         return new self($result);
     }
 
+    public function getProductSpecDescriptionModel()
+    {
+        if (is_null($this->productSpecDescriptionModel)) {
+            $this->productSpecDescriptionModel = ProductSpecDescriptionModel::loadByProductSpecId($this->id);
+        }
+
+        return $this->productSpecDescriptionModel;
+    }
     public static function create(int $productId, string $name) {
         $result = Mysql::insert("product_specs", ["product_id" => $productId, "name" => $name]);
         return self::loadById($result);
