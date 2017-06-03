@@ -84,7 +84,3 @@ echo "</div>";
 
 <script src="<?php echo $rootPath; ?>js/vendor/jquery.js"></script>
 <script src="<?php echo $rootPath; ?>js/vendor/foundation.js"></script>
-<script>
-    $(document).foundation();
-    var elem = new Foundation.DropdownMenu(".dropdown");
-</script>

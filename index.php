@@ -21,8 +21,19 @@ if (empty($_GET['path'])) {
     $path = $_GET['path'];
 }
 
+foreach (explode("/", $_SERVER['REQUEST_URI']) as $part) {
+    // Figure out what you want to do with the URL parts.
+    if (is_numeric($part)) {
+//        echo $part;
+        new \Controllers\ProductController($part);
+        $productController = new \Controllers\ProductController($part);
+        $productController->get();
+    }
+}
+
 $router = new Router($path);
 $router->processRequest($path);
+
 
 if ($path === "account"):
     //If not logged in, show login form
@@ -69,6 +80,8 @@ ob_end_flush();
 ?>
 
 <script>
+    $(document).foundation();
+
     path = window.location.pathname;
 
     //Search all the elements with the attribute href having the value of path given
