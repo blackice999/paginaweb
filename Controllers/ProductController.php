@@ -10,6 +10,7 @@ namespace Controllers;
 
 
 use Models\ProductModel;
+use Models\ProductResourcesModel;
 use Models\ProductSpecModel;
 use Utils\HTMLGenerator;
 
@@ -36,30 +37,34 @@ class ProductController implements Controller
         HtmlGenerator::row(5, 5, 5);
 
         echo "<div class=\"orbit\" role=\"region\" aria-label=\"Favorite Space Pictures\" data-orbit>
-  <ul class=\"orbit-container\">
-    <button class=\"orbit-previous\"><span class=\"show-for-sr\">Previous Slide</span>&#9664;&#xFE0E;</button>
-    <button class=\"orbit-next\"><span class=\"show-for-sr\">Next Slide</span>&#9654;&#xFE0E;</button>
-    <li class=\"is-active orbit-slide\">
-      <img class=\"orbit-image\" src=\"../img/workstation-147953_960_720.png\" alt=\"Space\">
-    </li>
-    <li class=\"orbit-slide\">
-      <img class=\"orbit-image\" src=\"../img/workstation-147953_960_720.png\" alt=\"Space\">
-    </li>
-    <li class=\"orbit-slide\">
-      <img class=\"orbit-image\" src=\"../img/workstation-147953_960_720.png\" alt=\"Space\">
-    </li>
-    <li class=\"orbit-slide\">
-      <img class=\"orbit-image\" src=\"../img/workstation-147953_960_720.png\" alt=\"Space\">
-    </li>
-  </ul>
-  <nav class=\"orbit-bullets\">
-    <button class=\"is-active\" data-slide=\"0\"><span class=\"show-for-sr\">First slide details.</span><span class=\"show-for-sr\">Current Slide</span></button>
-    <button data-slide=\"1\"><span class=\"show-for-sr\">Second slide details.</span></button>
-    <button data-slide=\"2\"><span class=\"show-for-sr\">Third slide details.</span></button>
-    <button data-slide=\"3\"><span class=\"show-for-sr\">Fourth slide details.</span></button>
-  </nav>
-</div>";
+         <ul class=\"orbit-container\">
+        <button class=\"orbit-previous\"><span class=\"show-for-sr\">Previous Slide</span>&#9664;&#xFE0E;</button>
+        <button class=\"orbit-next\"><span class=\"show-for-sr\">Next Slide</span>&#9654;&#xFE0E;</button>";
 
+        $productResoucesModel = ProductResourcesModel::loadByProductId($this->productId);
+        foreach ($productResoucesModel as $productResources) {
+            HTMLGenerator::tag("li",
+                HTMLGenerator::image($productResources->location, "", "orbit-image"),
+                "orbit-slide");
+        }
+        echo "</ul>
+        <nav class=\"orbit-bullets\">";
+
+        $productResourcesLength = sizeof($productResoucesModel);
+
+        //First button needs to be active, so set it here
+        echo "<button class=\"is-active\" data-slide=\"1\">";
+        HTMLGenerator::tag("span", "First slide details", "show-for-sr");
+        HTMLGenerator::tag("span", "Current slide", "show-for-sr");
+        echo "</button>";
+        for ($i = 2; $i <= $productResourcesLength; $i++) {
+            echo "<button data-slide=\"$i\">";
+            HTMLGenerator::tag("span", "First slide details", "show-for-sr");
+            HTMLGenerator::tag("span", "Current slide", "show-for-sr");
+            echo "</button>";
+        }
+        echo "</nav>
+</div>";
 
         echo "<div class='large-5  medium-5 small-5 columns>";
         echo "<div  style='border:1px solid black; width: 200px; height: 100px;'>";

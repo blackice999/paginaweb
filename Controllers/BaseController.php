@@ -10,6 +10,7 @@ namespace Controllers;
 
 
 use Models\ProductModel;
+use Models\ProductResourcesModel;
 use Utils\HTMLGenerator;
 use Utils\StringUtils;
 
@@ -32,20 +33,31 @@ abstract class BaseController implements Controller
             HTMLGenerator::tag("h2", "No " . StringUtils::removeUnderscore($categoryName) . " found");
         } else {
 
-            foreach (ProductModel::loadByCategoryId($categoryId) as $category) {
+            foreach (ProductModel::loadByCategoryId($categoryId) as $product) {
                 echo "<div class=\"column\" style='border: 1px solid black; padding: 10px; height: 400px;'>";
-                echo HTMLGenerator::image("//placehold.it/150x150", "placeholder 150x150",
-                    "float-center", "margin-bottom:30px");
-                echo HTMLGenerator::link("product/" . $category->id, $category->name,
+
+                //Display only the first image when viewing all products
+                $productResourcesModel = ProductResourcesModel::loadByProductId($product->id);
+                echo HTMLGenerator::image($productResourcesModel[0]->location, "",
+                    "float-center",
+                    "margin-bottom:30px; width:40%; height:40%");
+                echo HTMLGenerator::link("product/" . $product->id, $product->name,
                     "float-center text-center", "margin-bottom:30px");
 
                 echo " <ul>";
-                foreach ($category->getProductSpecModel() as $productSpecModel) {
-                    echo "<li>" . $productSpecModel->name . "</li>";
+                foreach ($product->getProductSpecModel() as $productSpecModel) {
+                    echo "<li>" . $productSpecModel->name . ": ";
+
+                    $productSpecDescriptionName = [];
+                    foreach ($productSpecModel->getProductSpecDescriptionModel() as $productSpecDescriptionModel) {
+                        $productSpecDescriptionName[] = $productSpecDescriptionModel->name;
+                    }
+                    echo implode(", ", $productSpecDescriptionName);
+                    echo "</li>";
                 }
                 echo "</ul>";
 
-                HTMLGenerator::tag("h3", "$" . $category->price);
+                HTMLGenerator::tag("h3", "$" . $product->price);
                 echo "</div>";
             }
 
