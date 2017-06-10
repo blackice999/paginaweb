@@ -54,6 +54,7 @@ abstract class BaseController implements Controller
 
                 echo " <ul>";
                 $productSpecModel = $product->getProductSpecModel();
+
                 foreach ($productSpecModel as $productSpec) {
                     echo "<li>" . $productSpec->name . ": ";
 
@@ -64,15 +65,16 @@ abstract class BaseController implements Controller
                     echo implode(", ", $productSpecDescriptionName);
                     echo "</li>";
 
-                    $productSpecModelLength = sizeof($productSpecModel);
                 }
                 echo "</ul>";
+                $productSpecModelLength = sizeof($productSpecModel);
 
                 if ($productSpecModelLength < 3) {
                     for ($i = 0; $i < (3 - $productSpecModelLength); $i++) {
                         echo "<br/>";
                     }
                 }
+
                 HTMLGenerator::tag("h3", "$" . $product->price, "", "border:1px solid black; float:left;");
                 echo "</div>";
             }
