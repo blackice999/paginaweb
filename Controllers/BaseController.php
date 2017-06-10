@@ -39,9 +39,16 @@ abstract class BaseController implements Controller
                 //Display only the first image when viewing all products
 
                 $productResourcesModel = ProductResourcesModel::loadByProductId($product->id);
-                echo HTMLGenerator::image($productResourcesModel[0]->location, "",
-                    "float-center",
-                    "margin-bottom:30px; width:40%; height:40%");
+
+                if (!empty($productResourcesModel)) {
+                    echo HTMLGenerator::image($productResourcesModel[0]->location, "",
+                        "float-center",
+                        "margin-bottom:30px; width:40%; height:40%");
+                } else {
+                    echo HTMLGenerator::image("https://placehold.it/150x150", "",
+                        "float-center",
+                        "margin-bottom:30px; width:40%; height:40%");
+                }
                 echo HTMLGenerator::link("product/" . $product->id, $product->name,
                     "float-center text-center", "margin-bottom:30px");
 
@@ -61,8 +68,8 @@ abstract class BaseController implements Controller
                 }
                 echo "</ul>";
 
-                if($productSpecModelLength < 3) {
-                    for($i = 0; $i < (3 - $productSpecModelLength); $i++) {
+                if ($productSpecModelLength < 3) {
+                    for ($i = 0; $i < (3 - $productSpecModelLength); $i++) {
                         echo "<br/>";
                     }
                 }
