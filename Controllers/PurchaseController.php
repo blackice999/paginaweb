@@ -24,6 +24,10 @@ class PurchaseController implements Controller
     {
         $this->productId = $productId;
 
+        if (!isset($_SESSION['products'])) {
+            $_SESSION['products'] = [];
+        }
+
         if (!in_array($this->productId, $_SESSION['products']) && is_numeric($this->productId)) {
             $_SESSION['products'][] = $this->productId;
         }
@@ -34,6 +38,7 @@ class PurchaseController implements Controller
 
         HTMLGenerator::row(12, 5, 5);
         HtmlGenerator::tag("h2", "In your cart");
+        $sum = 0;
         echo "<div class='callout'>";
 
 
@@ -51,10 +56,14 @@ class PurchaseController implements Controller
             echo "<td>" . 1 . "</td>";
             echo "<td>" . $product->price . "</td>";
             echo "</tr>";
+
+            $sum += $product->price;
         }
         echo "</table>";
 
         echo "</div>";
+
+        HTMLGenerator::tag("h4", "Total " . $sum, "float-right");
 
 
         HTMLGenerator::form("post", "/paginaweb/purchase/all", [
@@ -76,7 +85,9 @@ class PurchaseController implements Controller
             $sum += $product->price;
         }
 
-        echo $sum;
+        HTMLGenerator::tag("h3", "Thanks for your purchase");
+        HTMLGenerator::tag("p", "Your products will arrive at your destination in 4 working days");
+        unset($_SESSION['products']);
         HTMLGenerator::closeRow();
     }
 }
