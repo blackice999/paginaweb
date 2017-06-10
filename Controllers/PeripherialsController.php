@@ -21,18 +21,11 @@ class PeripherialsController extends BaseController implements Controller
     const MICE_CATEGORY_ID = 11;
     const KEYBOARDS_CATEGORY_ID = 12;
     const EXTERNAL_HDDS_CATEGORY_ID = 13;
+    const MAIN_CATEGORY_PATH = "peripherials";
 
     public function get()
     {
-        if (isset($_GET['path']) && $_GET['path'] !== "peripherials") {
-            $this->{$_GET['path']}($_GET['path']);
-        } else {
-            foreach ($this->categories as $category) {
-                $titleFromLink = StringUtils::removeUnderscore($category);
-                HTMLGenerator::tag("h3", ucfirst($titleFromLink));
-                echo HTMLGenerator::link($category, "Check all " . $titleFromLink);
-            }
-        }
+        $this->displayAllProductsByCategory(self::MAIN_CATEGORY_PATH, $this->categories);
     }
 
     public function post()

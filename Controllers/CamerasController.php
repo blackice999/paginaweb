@@ -21,18 +21,11 @@ class CamerasController extends BaseController implements Controller
     const D_SLRS_CATEGORY_ID = 32;
     const COMPACTS_CATEGORY_ID = 33;
     const BRIDGES_CATEGORY_ID = 34;
+    const MAIN_CATEGORY_PATH = "cameras";
 
     public function get()
     {
-        if (isset($_GET['path']) && $_GET['path'] !== "cameras") {
-            $this->{$_GET['path']}($_GET['path']);
-        } else {
-            foreach ($this->categories as $category) {
-                $titleFromLink = StringUtils::removeUnderscore($category);
-                HTMLGenerator::tag("h3", ucfirst($titleFromLink));
-                echo HTMLGenerator::link($category, "Check all " . $titleFromLink);
-            }
-        }
+        $this->displayAllProductsByCategory(self::MAIN_CATEGORY_PATH, $this->categories);
     }
 
     public function post()

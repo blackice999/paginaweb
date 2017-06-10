@@ -21,18 +21,11 @@ class TelephonesController extends BaseController implements Controller
     const SMARTPHONES_CATEGORY_ID = 19;
     const SMARTWATCHES_CATEGORY_ID = 20;
     const EXTERNAL_BATTERIES_CATEGORY_ID = 21;
+    const MAIN_CATEGORY_PATH = "telephones";
 
     public function get()
     {
-        if (isset($_GET['path']) && $_GET['path'] !== "telephones") {
-            $this->{$_GET['path']}($_GET['path']);
-        } else {
-            foreach ($this->categories as $category) {
-                $titleFromLink = StringUtils::removeUnderscore($category);
-                HTMLGenerator::tag("h3", ucfirst($titleFromLink));
-                echo HTMLGenerator::link($category, "Check all " . $titleFromLink);
-            }
-        }
+        $this->displayAllProductsByCategory(self::MAIN_CATEGORY_PATH, $this->categories);
     }
 
 

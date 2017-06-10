@@ -20,18 +20,11 @@ class SoftwareController extends BaseController implements Controller
     const OPERATING_SYSTEMS_CATEGORY_ID = 15;
     const OFFICE_APPS_CATEGORY_ID = 16;
     const SECURITY_SOLUTIONS_CATEGORY_ID = 17;
+    const MAIN_CATEGORY_PATH = "software";
 
     public function get()
     {
-        if (isset($_GET['path']) && $_GET['path'] !== "software") {
-            $this->{$_GET['path']}($_GET['path']);
-        } else {
-            foreach ($this->categories as $category) {
-                $titleFromLink = StringUtils::removeUnderscore($category);
-                HTMLGenerator::tag("h3", ucfirst($titleFromLink));
-                echo HTMLGenerator::link($category, "Check all " . $titleFromLink);
-            }
-        }
+        $this->displayAllProductsByCategory(self::MAIN_CATEGORY_PATH, $this->categories);
     }
 
     public function post()

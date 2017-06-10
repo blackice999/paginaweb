@@ -27,6 +27,19 @@ abstract class BaseController implements Controller
         // TODO: Implement post() method.
     }
 
+    public function displayAllProductsByCategory(string $mainCategoryPath, array $categories)
+    {
+        if (isset($_GET['path']) && $_GET['path'] !== $mainCategoryPath) {
+            $this->{$_GET['path']}($_GET['path']);
+        } else {
+            foreach ($categories as $category) {
+                $titleFromLink = StringUtils::removeUnderscore($category);
+                HTMLGenerator::tag("h3", ucfirst($titleFromLink));
+                echo HTMLGenerator::link($category, "Check all " . $titleFromLink);
+            }
+        }
+    }
+
     public function displayProducts(int $categoryId, string $categoryName)
     {
         if (empty(ProductModel::loadByCategoryId($categoryId))) {

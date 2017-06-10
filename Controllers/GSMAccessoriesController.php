@@ -22,18 +22,11 @@ class GSMAccessoriesController extends BaseController implements Controller
     const MEMORY_CARDS_CATEGORY_ID = 24;
     const CHARGERS_CATEGORY_ID = 25;
     const WIRELESS_CHARGERS_CATEGORY_ID = 26;
+    const MAIN_CATEGORY_PATH = "gsm_accessories";
 
     public function get()
     {
-        if (isset($_GET['path']) && $_GET['path'] !== "gsm_accessories") {
-            $this->{$_GET['path']}($_GET['path']);
-        } else {
-            foreach ($this->categories as $category) {
-                $titleFromLink = StringUtils::removeUnderscore($category);
-                HTMLGenerator::tag("h3", ucfirst($titleFromLink));
-                echo HTMLGenerator::link($category, "Check all " . $titleFromLink);
-            }
-        }
+        $this->displayAllProductsByCategory(self::MAIN_CATEGORY_PATH, $this->categories);
     }
 
     public function post()

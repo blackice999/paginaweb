@@ -24,18 +24,11 @@ class ComputerPartsController extends BaseController implements Controller
     const HDDS_CATEGORY_ID = 6;
     const POWER_SUPPLIES_CATEGORY_ID = 7;
     const CHASSIS_CATEGORY_ID = 8;
+    const MAIN_CATEGORY_PATH = "computer_parts";
 
     public function get()
     {
-        if (isset($_GET['path']) && $_GET['path'] !== "computer_parts") {
-            $this->{$_GET['path']}($_GET['path']);
-        } else {
-            foreach ($this->categories as $category) {
-                $titleFromLink = StringUtils::removeUnderscore($category);
-                HTMLGenerator::tag("h3", ucfirst($titleFromLink));
-                echo HTMLGenerator::link($category, "Check all " . $titleFromLink);
-            }
-        }
+        $this->displayAllProductsByCategory(self::MAIN_CATEGORY_PATH, $this->categories);
     }
 
     public function post()

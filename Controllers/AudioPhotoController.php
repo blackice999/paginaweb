@@ -21,18 +21,11 @@ class AudioPhotoController extends BaseController implements Controller
     const SPEAKERS_CATEGORY_ID = 28;
     const MICROPHONES_CATEGORY_ID = 29;
     const CAMERAS_CATEGORY_ID = 30;
+    const MAIN_CATEGORY_PATH = "audio_photo";
 
     public function get()
     {
-        if (isset($_GET['path']) && $_GET['path'] !== "audio_photo") {
-            $this->{$_GET['path']}($_GET['path']);
-        } else {
-            foreach ($this->categories as $category) {
-                $titleFromLink = StringUtils::removeUnderscore($category);
-                HTMLGenerator::tag("h3", ucfirst($titleFromLink));
-                echo HTMLGenerator::link($category, "Check all " . $titleFromLink);
-            }
-        }
+        $this->displayAllProductsByCategory(self::MAIN_CATEGORY_PATH, $this->categories);
     }
 
     public function post()

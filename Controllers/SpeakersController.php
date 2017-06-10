@@ -19,18 +19,11 @@ class SpeakersController extends BaseController implements Controller
 
     private $categories = ["portable_speakers"];
     const PORTABLE_SPEAKERS_CATEGORY_ID = 31;
+    const MAIN_CATEGORY_PATH = "speakers";
 
     public function get()
     {
-        if (isset($_GET['path']) && $_GET['path'] !== "speakers") {
-            $this->{$_GET['path']}($_GET['path']);
-        } else {
-            foreach ($this->categories as $category) {
-                $titleFromLink = StringUtils::removeUnderscore($category);
-                HTMLGenerator::tag("h3", ucfirst($titleFromLink));
-                echo HTMLGenerator::link($category, "Check all " . $titleFromLink);
-            }
-        }
+        $this->displayAllProductsByCategory(self::MAIN_CATEGORY_PATH, $this->categories);
     }
 
     public function post()
