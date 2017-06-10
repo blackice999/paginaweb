@@ -26,7 +26,8 @@ class ProductModel extends ActiveRecord
         return $computerPartsModel;
     }
 
-    public static function loadById(int $id) {
+    public static function loadById(int $id)
+    {
         $result = Mysql::getOne("products", ["id" => $id]);
         return new self($result);
     }
@@ -40,9 +41,14 @@ class ProductModel extends ActiveRecord
         return $this->productSpecModel;
     }
 
-    public static function create(int $categoryId, string $tableName, string $name, string $description, string $price) {
+    public static function buy(int $productId)
+    {
+        Mysql::decrementColumn("products", "stock", ["id" => $productId]);
+    }
+
+    public static function create(int $categoryId, string $tableName, string $name, string $description, string $price)
+    {
         $result = Mysql::insert($tableName, ["category_id" => $categoryId, "name" => $name, "description" => $description, "price" => $price]);
         return self::loadById($result);
-
     }
 }
