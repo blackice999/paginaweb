@@ -88,7 +88,8 @@ abstract class BaseController implements Controller
                     }
                 }
 
-                HTMLGenerator::tag("h3", "$" . $product->price, "", "border:1px solid black; float:left;");
+                HTMLGenerator::tag("h3", "$" . $product->price, "", "float:left;");
+                echo HTMLGenerator::link("purchase/" . $product->id, "Buy", "button success", "float:right;");
                 echo "</div>";
             }
 

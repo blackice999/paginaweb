@@ -21,12 +21,16 @@ if (empty($_GET['path'])) {
     $path = $_GET['path'];
 }
 
-foreach (explode("/", $_SERVER['REQUEST_URI']) as $part) {
-    // Figure out what you want to do with the URL parts.
-    if (is_numeric($part)) {
-//        echo $part;
-        new \Controllers\ProductController($part);
-        $productController = new \Controllers\ProductController($part);
+$explode = explode("/", $_SERVER['REQUEST_URI']);
+$length = count($explode);
+for ($i = 0; $i < $length - 1; $i++) {
+    if ($explode[$i] === "purchase") {
+        $productId = $explode[$i + 1];
+        $purchaseController = new \Controllers\PurchaseController($productId);
+        $purchaseController->get();
+    } else if ($explode[$i] === "product") {
+        $productId = $explode[$i + 1];
+        $productController = new \Controllers\ProductController($productId);
         $productController->get();
     }
 }
