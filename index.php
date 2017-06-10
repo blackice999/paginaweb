@@ -21,13 +21,15 @@ if (empty($_GET['path'])) {
     $path = $_GET['path'];
 }
 
-$explode = explode("/", $_SERVER['REQUEST_URI']);
+$method = $_SERVER['REQUEST_METHOD'];
+$explode = explode("/", $path);
 $length = count($explode);
+
 for ($i = 0; $i < $length - 1; $i++) {
     if ($explode[$i] === "purchase") {
         $productId = $explode[$i + 1];
         $purchaseController = new \Controllers\PurchaseController($productId);
-        $purchaseController->get();
+        $purchaseController->{$method}();
     } else if ($explode[$i] === "product") {
         $productId = $explode[$i + 1];
         $productController = new \Controllers\ProductController($productId);
