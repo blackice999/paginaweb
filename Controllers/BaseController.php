@@ -37,6 +37,7 @@ abstract class BaseController implements Controller
                 echo "<div class=\"column\" style='border: 1px solid black; padding: 10px; height: 400px;'>";
 
                 //Display only the first image when viewing all products
+
                 $productResourcesModel = ProductResourcesModel::loadByProductId($product->id);
                 echo HTMLGenerator::image($productResourcesModel[0]->location, "",
                     "float-center",
@@ -45,19 +46,27 @@ abstract class BaseController implements Controller
                     "float-center text-center", "margin-bottom:30px");
 
                 echo " <ul>";
-                foreach ($product->getProductSpecModel() as $productSpecModel) {
-                    echo "<li>" . $productSpecModel->name . ": ";
+                $productSpecModel = $product->getProductSpecModel();
+                foreach ($productSpecModel as $productSpec) {
+                    echo "<li>" . $productSpec->name . ": ";
 
                     $productSpecDescriptionName = [];
-                    foreach ($productSpecModel->getProductSpecDescriptionModel() as $productSpecDescriptionModel) {
+                    foreach ($productSpec->getProductSpecDescriptionModel() as $productSpecDescriptionModel) {
                         $productSpecDescriptionName[] = $productSpecDescriptionModel->name;
                     }
                     echo implode(", ", $productSpecDescriptionName);
                     echo "</li>";
+
+                    $productSpecModelLength = sizeof($productSpecModel);
                 }
                 echo "</ul>";
 
-                HTMLGenerator::tag("h3", "$" . $product->price);
+                if($productSpecModelLength < 3) {
+                    for($i = 0; $i < (3 - $productSpecModelLength); $i++) {
+                        echo "<br/>";
+                    }
+                }
+                HTMLGenerator::tag("h3", "$" . $product->price, "", "border:1px solid black; float:left;");
                 echo "</div>";
             }
 
