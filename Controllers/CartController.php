@@ -10,6 +10,7 @@ namespace Controllers;
 
 
 use Models\ProductModel;
+use Models\UserAddressesModel;
 use Utils\HTMLGenerator;
 use Utils\StringUtils;
 
@@ -21,8 +22,6 @@ class CartController implements Controller
      */
     public function __construct()
     {
-//        $this->productId = $productId;
-
         if (!isset($_SESSION['products'])) {
             $_SESSION['products'] = [];
         }
@@ -76,10 +75,16 @@ class CartController implements Controller
 
                 echo "</div>";
 
+                echo HTMLGenerator::tag("h3", "Select your address");
+                echo "<select name='addresses'>";
+                foreach (UserAddressesModel::loadByUserId($_SESSION['userId']) as $address) {
+                    echo "<option value='" . $address->id . "'>$address->address";
+                }
+
+                echo "</select>";
                 echo "<input type='submit' class='button' name='buy' value='Buy'>";
                 echo "</form>";
 
-                echo "<div id='test'></div>";
                 echo HTMLGenerator::tag("h4",
                     "Total " . HTMLGenerator::tag("span", $sum, "total"),
                     "float-right");
@@ -99,12 +104,13 @@ class CartController implements Controller
                 $quantity = StringUtils::sanitizeString($_POST['quantity'][$i]);
                 $productId = $_SESSION['products'][$i];
                 $product = ProductModel::loadById($productId);
+                $address = UserAddressesModel::loadById(StringUtils::sanitizeString($_POST['addresses']))->address;
                 ProductModel::buy($productId, $quantity);
                 $sum += $product->price;
             }
 
             echo HTMLGenerator::tag("h3", "Thanks for your purchase");
-            echo HTMLGenerator::tag("p", "Your products will arrive at your destination in 4 working days");
+            echo HTMLGenerator::tag("p", "Your products will arrive at " . $address . " in 4 working days");
             unset($_SESSION['products']);
             header("Refresh: 5; URL= index");
 
