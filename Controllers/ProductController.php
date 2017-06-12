@@ -99,6 +99,11 @@ class ProductController implements Controller
 
         echo "</div>";
 
+        HTMLGenerator::row(11,11,11);
+        echo "<div class='callout'>";
+        echo $product->description;
+        echo "</div>";
+        HTMLGenerator::closeRow();
         HTMLGenerator::row(5, 5, 5);
         echo HTMLGenerator::tag("h2", "Technical specifications");
 
