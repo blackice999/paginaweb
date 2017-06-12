@@ -46,9 +46,17 @@ class ProductModel extends ActiveRecord
         Mysql::decrementColumn("products", "stock", $amount, ["id" => $productId]);
     }
 
-    public static function create(int $categoryId, string $tableName, string $name, string $description, string $price)
+    public static function create(int $categoryId, string $name, string $description, string $price, int $stock)
     {
-        $result = Mysql::insert($tableName, ["category_id" => $categoryId, "name" => $name, "description" => $description, "price" => $price]);
+        $result = Mysql::insert("products",
+            [
+                "category_id" => $categoryId,
+                "name" => $name,
+                "description" => $description,
+                "price" => $price,
+                "stock" => $stock
+            ]
+        );
         return self::loadById($result);
     }
 }

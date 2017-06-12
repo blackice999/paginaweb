@@ -33,16 +33,7 @@ class GSMAccessoriesController extends BaseController implements Controller
     {
         if (isset($_POST['submit'])) {
             $categoryId = constant("self::" . strtoupper($_GET['path']) . "_CATEGORY_ID");
-            $name = StringUtils::sanitizeString($_POST['name']);
-            $description = StringUtils::sanitizeString($_POST['description']);
-            $price = StringUtils::sanitizeString($_POST['price']);
-            $specName = StringUtils::sanitizeString($_POST['spec_name']);
-
-            $result = ProductModel::create($categoryId, "products", $name, $description, $price);
-            echo HTMLGenerator::tag("p", "Inserted new " .
-                StringUtils::removeUnderscore(StringUtils::toSingular($_GET['path'])) .
-                " with the id " . $result->id);
-            ProductSpecModel::create($result->id, $specName);
+            $this->insertNewProduct($categoryId);
         }
     }
 
@@ -54,7 +45,7 @@ class GSMAccessoriesController extends BaseController implements Controller
 
         $this->displayProducts($categoryId, $name);
 
-        $this->insertNewProduct($name);
+        $this->insertNewProductForm($name);
         HTMLGenerator::closeRow();
     }
 }

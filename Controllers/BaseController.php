@@ -11,6 +11,8 @@ namespace Controllers;
 
 use Models\ProductModel;
 use Models\ProductResourcesModel;
+use Models\ProductSpecDescriptionModel;
+use Models\ProductSpecModel;
 use Utils\HTMLGenerator;
 use Utils\StringUtils;
 
@@ -100,7 +102,7 @@ abstract class BaseController implements Controller
         }
     }
 
-    public function insertNewProduct($name)
+    public function insertNewProductForm($name)
     {
 
         if (isset($_SESSION['userId'])) {
@@ -111,8 +113,27 @@ abstract class BaseController implements Controller
                 ["label" => "Description", "type" => "text", "name" => "description", "value" => ""],
                 ["label" => "price", "type" => "text", "name" => "price", "value" => ""],
                 ["label" => "Specification name", "type" => "text", "name" => "spec_name", "value" => ""],
-                ["label" => "", "type" => "submit", "name" => "submit", "value" => "Insert motherboard"]
+                ["label" => "Specification description", "type" => "text", "name" => "spec_description", "value" => ""],
+                ["label" => "Stock", "type" => "number", "name" => "stock", "value" => ""],
+                ["label" => "", "type" => "submit", "name" => "submit", "value" => "Insert"]
             ]);
         }
+    }
+
+    public function insertNewProduct(int $categoryId)
+    {
+        $name = StringUtils::sanitizeString($_POST['name']);
+        $description = StringUtils::sanitizeString($_POST['description']);
+        $price = StringUtils::sanitizeString($_POST['price']);
+        $specName = StringUtils::sanitizeString($_POST['spec_name']);
+        $specDescription = StringUtils::sanitizeString($_POST['spec_description']);
+        $stock = StringUtils::sanitizeString($_POST['stock']);
+
+        $result = ProductModel::create($categoryId, $name, $description, $price, $stock);
+        echo HTMLGenerator::tag("p", "Inserted new " .
+            StringUtils::removeUnderscore(StringUtils::toSingular($_GET['path'])) .
+            " with the id " . $result->id);
+        $specId = ProductSpecModel::create($result->id, $specName);
+        ProductSpecDescriptionModel::create($specId->id, $specDescription);
     }
 }
