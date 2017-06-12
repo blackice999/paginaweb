@@ -57,7 +57,7 @@ class HTMLGenerator
 
     public static function tag(string $tagName, string $content, string $class = "", $style = "")
     {
-        echo "<" . $tagName . " class='" . $class . "' style='" . $style . "'>" . $content . "</" . $tagName . ">";
+        return "<" . $tagName . " class='" . $class . "' style='" . $style . "'>" . $content . "</" . $tagName . ">";
     }
 
     public static function link(string $href, string $content, string $class = "", $style = "")

@@ -42,6 +42,8 @@ $router->processRequest($path);
 ob_end_flush();
 ?>
 
+<script src="<?php echo "/paginaweb/";?>js/app.js"></script>
+
 <script>
     $(document).foundation();
     path = window.location.pathname;

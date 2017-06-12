@@ -11,6 +11,7 @@ namespace Controllers;
 
 use Models\ProductModel;
 use Utils\HTMLGenerator;
+use Utils\StringUtils;
 
 class PurchaseController implements Controller
 {
@@ -41,47 +42,54 @@ class PurchaseController implements Controller
         $sum = 0;
         echo "<div class='callout'>";
 
-
-        echo "<table>";
+        echo "<table id='cart'>";
 
         echo "<tr>";
         echo "<th>Name </th>";
         echo "<th>Quantity</th>";
         echo "<th>Price</th>";
+        echo "<th>Remove</th>";
         echo "</tr>";
+
+        echo "<form method='post' action='/paginaweb/purchase/all'>";
         foreach ($_SESSION['products'] as $productsId) {
             $product = ProductModel::loadById($productsId);
             echo "<tr>";
             echo "<td>" . $product->name . "</td>";
-            echo "<td>" . 1 . "</td>";
-            echo "<td>" . $product->price . "</td>";
+            echo "<td class='quan'> <input class='quantity' type='number' name='quantity[]' value='1'></td>";
+            echo "<td class='price'>" . $product->price . "</td>";
+            echo "<td> Yes</td>";
             echo "</tr>";
 
             $sum += $product->price;
         }
+
         echo "</table>";
 
         echo "</div>";
 
-        HTMLGenerator::tag("h4", "Total " . $sum, "float-right");
+        echo "<input type='submit' class='button' name='buy' value='Buy'>";
+        echo "</form>";
 
-
-        HTMLGenerator::form("post", "/paginaweb/purchase/all", [
-                ["label" => "", "type" => "submit", "name" => "buy", "value" => "Buy"]
-            ]
-        );
+        echo "<div id='test'></div>";
+        echo HTMLGenerator::tag("h4",
+            "Total " . HTMLGenerator::tag("span", $sum, "total"),
+            "float-right");
         HTMLGenerator::closeRow();
     }
 
     public function post()
     {
-
         HTMLGenerator::row(10, 10, 10);
-        $sum = 0;
 
-        foreach ($_SESSION['products'] as $productId) {
+        $sum = 0;
+        $numberOfProducts = sizeof($_SESSION['products']);
+
+        for ($i = 0; $i < $numberOfProducts; $i++) {
+            $quantity = StringUtils::sanitizeString($_POST['quantity'][$i]);
+            $productId = $_SESSION['products'][$i];
             $product = ProductModel::loadById($productId);
-            ProductModel::buy($productId);
+            ProductModel::buy($productId, $quantity);
             $sum += $product->price;
         }
 
