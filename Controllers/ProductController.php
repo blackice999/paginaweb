@@ -99,7 +99,7 @@ class ProductController implements Controller
 
         echo "</div>";
 
-        HTMLGenerator::row(11,11,11);
+        HTMLGenerator::row(11, 11, 11);
         echo "<div class='callout'>";
         echo $product->description;
         echo "</div>";
