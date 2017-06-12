@@ -19,7 +19,7 @@ class LogOutController implements Controller
         ob_start();
         unset($_SESSION['userId']);
         HTMLGenerator::row(5, 5, 5);
-        HTMLGenerator::tag("p", "Logged out, redirecting to home page in 5 seconds");
+        echo HTMLGenerator::tag("p", "Logged out, redirecting to home page in 5 seconds");
         HTMLGenerator::closeRow();
 
         //Wait 5 seconds then redirect to home page

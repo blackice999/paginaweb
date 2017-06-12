@@ -20,7 +20,7 @@ class LogInController implements Controller
     public function get()
     {
         HTMLGenerator::row(4);
-        HTMLGenerator::tag("h2", "Log In");
+        echo HTMLGenerator::tag("h2", "Log In");
 
         HTMLGenerator::form("post", "log_in", [
                 ["label" => "Email", "type" => "email", "name" => "email", "value" => ""],
@@ -61,7 +61,7 @@ class LogInController implements Controller
                 var_dump($this->errors);
             } else {
                 HTMLGenerator::row(5,5,5);
-                HTMLGenerator::tag("h2","Successfully logged in");
+                echo HTMLGenerator::tag("h2","Successfully logged in");
                 HTMLGenerator::closeRow();
                 $_SESSION['userId'] = $userModel->id;
                 header("Location: index");

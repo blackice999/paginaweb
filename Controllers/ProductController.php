@@ -73,7 +73,7 @@ class ProductController implements Controller
         echo "</div>";
         HTMLGenerator::closeRow();
         echo "<div class='float-right'>";
-        HTMLGenerator::tag("div", "$" . $product->price);
+        echo HTMLGenerator::tag("div", "$" . $product->price);
         echo "<br />";
         echo HTMLGenerator::link("../purchase/" . $product->id, "Buy", "button success");
 

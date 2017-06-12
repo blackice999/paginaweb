@@ -65,16 +65,16 @@ class ContactController implements Controller
         $this->showMenu();
 
 
-        HTMLGenerator::tag("h2", "Working hours");
+        echo HTMLGenerator::tag("h2", "Working hours");
         $this->displayWorkingHours();
 
         echo "<div class='large-10 medium-3 small-3 columns'>";
-        HTMLGenerator::tag("h3", "News and client support on social networks");
+        echoHTMLGenerator::tag("h3", "News and client support on social networks");
         echo "</div>";
 
         $this->displaySocialMediaLinks();
         echo "<div class='large-10 medium-3 small-3 columns'>";
-        HTMLGenerator::tag("h3", "Contact details");
+       echo HTMLGenerator::tag("h3", "Contact details");
         echo "</div>";
         $this->displayContactDetails();
     }
@@ -126,14 +126,14 @@ class ContactController implements Controller
     private function displaySocialMediaLinks() {
         echo "<div class='large-5 medium-3 small-3 columns'>";
                     echo HTMLGenerator::link("#",HTMLGenerator::image("https://placehold.it/100x100", "facebook"));
-                    HTMLGenerator::tag("span", "Facebook");
-                    HTMLGenerator::tag("br", "");
+                    echo HTMLGenerator::tag("span", "Facebook");
+                    echo HTMLGenerator::tag("br", "");
                     echo HTMLGenerator::link("#",HTMLGenerator::image("https://placehold.it/100x100", "twitter"));
-                    HTMLGenerator::tag("span", "Twitter");
-                    HTMLGenerator::tag("br", "");
+                    echo HTMLGenerator::tag("span", "Twitter");
+                    echo HTMLGenerator::tag("br", "");
 
                     echo HTMLGenerator::link("#",HTMLGenerator::image("https://placehold.it/100x100", "instagram"));
-                    HTMLGenerator::tag("span", "Instagram");
+                    echo HTMLGenerator::tag("span", "Instagram");
         echo "</div>";
     }
 

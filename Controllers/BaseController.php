@@ -105,7 +105,7 @@ abstract class BaseController implements Controller
 
         if (isset($_SESSION['userId'])) {
             HTMLGenerator::row(5, 5, 5);
-            HTMLGenerator::tag("h2", "Add a new " . StringUtils::removeUnderscore(StringUtils::toSingular($name)));
+            echo HTMLGenerator::tag("h2", "Add a new " . StringUtils::removeUnderscore(StringUtils::toSingular($name)));
             HTMLGenerator::form("post", $_GET['path'], [
                 ["label" => "Name", "type" => "text", "name" => "name", "value" => ""],
                 ["label" => "Description", "type" => "text", "name" => "description", "value" => ""],

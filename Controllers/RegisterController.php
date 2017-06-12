@@ -21,7 +21,7 @@ class RegisterController implements Controller
     public function get()
     {
         HTMLGenerator::row(4);
-        HTMLGenerator::tag("h2", "Register");
+        echo HTMLGenerator::tag("h2", "Register");
 
         HTMLGenerator::form("post", "register", [
             ["label" => "Full name", "type" => "text", "name" => "name", "value" => ""],
@@ -77,7 +77,7 @@ class RegisterController implements Controller
                 UserModel::create($name, $username, $email, $password);
 
                 HTMLGenerator::row(4, 4, 4);
-                HTMLGenerator::tag("h2", "Successfully inserted user");
+                echo HTMLGenerator::tag("h2", "Successfully inserted user");
                 HTMLGenerator::closeRow();
             }
         }
