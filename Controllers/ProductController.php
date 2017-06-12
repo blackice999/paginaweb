@@ -11,8 +11,10 @@ namespace Controllers;
 
 use Models\ProductModel;
 use Models\ProductResourcesModel;
+use Models\ProductSpecDescriptionModel;
 use Models\ProductSpecModel;
 use Utils\HTMLGenerator;
+use Utils\StringUtils;
 
 class ProductController implements Controller
 {
@@ -113,11 +115,60 @@ class ProductController implements Controller
         }
 
         echo "</table>";
+
         HTMLGenerator::closeRow();
+        $this->addNewSpecificationForm();
+        $this->modifyProductForm();
+
+    }
+
+    public function modifyProductForm()
+    {
+        if (isset($_SESSION['userId'])) {
+            HTMLGenerator::row(5, 5, 5);
+            echo HTMLGenerator::tag("h2", "Modify this product");
+            HTMLGenerator::form("post", $_GET['path'], [
+                ["label" => "Name", "type" => "text", "name" => "name", "value" => ""],
+                ["label" => "Description", "type" => "text", "name" => "description", "value" => ""],
+                ["label" => "price", "type" => "text", "name" => "price", "value" => ""],
+                ["label" => "Specification name", "type" => "text", "name" => "spec_name", "value" => ""],
+                ["label" => "Specification description", "type" => "text", "name" => "spec_description", "value" => ""],
+                ["label" => "Stock", "type" => "number", "name" => "stock", "value" => ""],
+                ["label" => "", "type" => "submit", "name" => "modify_product", "value" => "Modify"]
+            ]);
+
+            HTMLGenerator::closeRow();
+        }
+    }
+
+    public function addNewSpecificationForm()
+    {
+        if (isset($_SESSION['userId'])) {
+            HTMLGenerator::row(5, 5, 5);
+            echo HTMLGenerator::tag("h2", "Add new specification, separate description by comma");
+            HTMLGenerator::form("post", "../" . $_GET['path'], [
+                ["label" => "Name", "type" => "text", "name" => "name", "value" => ""],
+                ["label" => "Description", "type" => "text", "name" => "description", "value" => ""],
+                ["label" => "", "type" => "submit", "name" => "new_spec", "value" => "Insert"]
+            ]);
+
+            HTMLGenerator::closeRow();
+        }
     }
 
     public function post()
     {
-        // TODO: Implement post() method.
+        if (isset($_POST['new_spec'])) {
+            echo $this->productId;
+            $name = StringUtils::sanitizeString($_POST['name']);
+            $description = StringUtils::sanitizeString($_POST['description']);
+            $descriptionPieces = explode(", ", $description);
+
+            $spec = ProductSpecModel::create($this->productId, $name);
+
+            foreach ($descriptionPieces as $descriptionPiece) {
+                ProductSpecDescriptionModel::create($spec->id, $descriptionPiece);
+            }
+        }
     }
 }

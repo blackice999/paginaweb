@@ -29,7 +29,7 @@ for ($i = 0; $i < $length - 1; $i++) {
     if ($explode[$i] === "product") {
         $productId = $explode[$i + 1];
         $productController = new \Controllers\ProductController($productId);
-        $productController->get();
+        $productController->{$method}();
     }
 }
 
