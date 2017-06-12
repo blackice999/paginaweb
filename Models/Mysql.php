@@ -132,9 +132,10 @@ class Mysql
         return self::query($sql);
     }
 
-    public static function decrementColumn(string $tableName, string $column, array $where)
+    public static function decrementColumn(string $tableName, string $column, int $amount, array $where)
     {
-        $sql = "UPDATE `" . $tableName . "` SET `$column` = `$column` - 1 WHERE ";
+        $sql = "UPDATE `" . $tableName . "` SET `$column` = `$column` -" . self::getConnection()->escape_string($amount) . " WHERE ";
+
 
         foreach ($where as $columnName => $columnValue) {
             $sql .= '`' . $columnName . '` = "' . self::getConnection()->escape_string($columnValue) . '" AND ';

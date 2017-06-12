@@ -34,7 +34,7 @@ abstract class BaseController implements Controller
         } else {
             foreach ($categories as $category) {
                 $titleFromLink = StringUtils::removeUnderscore($category);
-                HTMLGenerator::tag("h3", ucfirst($titleFromLink));
+                echo HTMLGenerator::tag("h3", ucfirst($titleFromLink));
                 echo HTMLGenerator::link($category, "Check all " . $titleFromLink);
             }
         }
@@ -43,7 +43,7 @@ abstract class BaseController implements Controller
     public function displayProducts(int $categoryId, string $categoryName)
     {
         if (empty(ProductModel::loadByCategoryId($categoryId))) {
-            HTMLGenerator::tag("h2", "No " . StringUtils::removeUnderscore($categoryName) . " found");
+            echo HTMLGenerator::tag("h2", "No " . StringUtils::removeUnderscore($categoryName) . " found");
         } else {
 
             foreach (ProductModel::loadByCategoryId($categoryId) as $product) {
@@ -88,8 +88,11 @@ abstract class BaseController implements Controller
                     }
                 }
 
-                HTMLGenerator::tag("h3", "$" . $product->price, "", "float:left;");
-                echo HTMLGenerator::link("purchase/" . $product->id, "Buy", "button success", "float:right;");
+                echo HTMLGenerator::tag("h3", "$" . $product->price, "", "float:left;");
+                HTMLGenerator::form("get", "cart", [
+                    ['label' => "", "type" => "hidden", "name" => "product_id", "value" => $product->id],
+                    ['label' => "", "type" => "submit", "name" => "purchase", "value" => "Purchase"]
+                ], "float-right");
                 echo "</div>";
             }
 

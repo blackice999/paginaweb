@@ -30,7 +30,8 @@ $menu = [
     "account" => [[]],
     "log_in" => [[]],
     "log_out" => [[]],
-    "register" => [[]]
+    "register" => [[]],
+    "cart" => [[]]
 ];
 
 $rootPath = "/paginaweb/";
@@ -51,7 +52,7 @@ foreach ($menu as $menuItem => $item) {
             echo \Utils\HTMLGenerator::link($rootPath . $menuItem, ucfirst(\Utils\StringUtils::removeUnderscore($menuItem)));
         }
     } else if ($menuItem === "log_in" || $menuItem === "register") {
-        if(!isset($_SESSION['userId'])) {
+        if (!isset($_SESSION['userId'])) {
             echo \Utils\HTMLGenerator::link($rootPath . $menuItem, ucfirst(\Utils\StringUtils::removeUnderscore($menuItem)));
         }
     } else {

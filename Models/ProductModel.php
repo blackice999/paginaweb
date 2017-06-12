@@ -41,9 +41,9 @@ class ProductModel extends ActiveRecord
         return $this->productSpecModel;
     }
 
-    public static function buy(int $productId)
+    public static function buy(int $productId, $amount)
     {
-        Mysql::decrementColumn("products", "stock", ["id" => $productId]);
+        Mysql::decrementColumn("products", "stock", $amount, ["id" => $productId]);
     }
 
     public static function create(int $categoryId, string $tableName, string $name, string $description, string $price)

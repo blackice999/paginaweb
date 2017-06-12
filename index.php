@@ -26,11 +26,7 @@ $explode = explode("/", $path);
 $length = count($explode);
 
 for ($i = 0; $i < $length - 1; $i++) {
-    if ($explode[$i] === "purchase") {
-        $productId = $explode[$i + 1];
-        $purchaseController = new \Controllers\PurchaseController($productId);
-        $purchaseController->{$method}();
-    } else if ($explode[$i] === "product") {
+    if ($explode[$i] === "product") {
         $productId = $explode[$i + 1];
         $productController = new \Controllers\ProductController($productId);
         $productController->get();
@@ -42,7 +38,7 @@ $router->processRequest($path);
 ob_end_flush();
 ?>
 
-<script src="<?php echo "/paginaweb/";?>js/app.js"></script>
+<script src="<?php echo "/paginaweb/"; ?>js/app.js"></script>
 
 <script>
     $(document).foundation();
