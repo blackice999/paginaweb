@@ -32,7 +32,7 @@ class ProductController implements Controller
     {
         $product = ProductModel::loadById($this->productId);
         HTMLGenerator::row(12, 12, 12);
-        HTMLGenerator::tag("h2", $product->name);
+        echo HTMLGenerator::tag("h2", $product->name);
         HTMLGenerator::closeRow();
         HtmlGenerator::row(5, 5, 5);
 
@@ -43,7 +43,7 @@ class ProductController implements Controller
 
         $productResoucesModel = ProductResourcesModel::loadByProductId($this->productId);
         foreach ($productResoucesModel as $productResources) {
-            HTMLGenerator::tag("li",
+            echo HTMLGenerator::tag("li",
                 HTMLGenerator::image($productResources->location, "", "orbit-image"),
                 "orbit-slide");
         }
@@ -54,13 +54,13 @@ class ProductController implements Controller
 
         //First button needs to be active, so set it here
         echo "<button class=\"is-active\" data-slide=\"1\">";
-        HTMLGenerator::tag("span", "First slide details", "show-for-sr");
-        HTMLGenerator::tag("span", "Current slide", "show-for-sr");
+        echo HTMLGenerator::tag("span", "First slide details", "show-for-sr");
+        echo HTMLGenerator::tag("span", "Current slide", "show-for-sr");
         echo "</button>";
         for ($i = 2; $i <= $productResourcesLength; $i++) {
             echo "<button data-slide=\"$i\">";
-            HTMLGenerator::tag("span", "First slide details", "show-for-sr");
-            HTMLGenerator::tag("span", "Current slide", "show-for-sr");
+            echo HTMLGenerator::tag("span", "First slide details", "show-for-sr");
+            echo HTMLGenerator::tag("span", "Current slide", "show-for-sr");
             echo "</button>";
         }
         echo "</nav>
@@ -81,21 +81,21 @@ class ProductController implements Controller
 
         //Content for the middle of the page
         if ($product->stock > 50) {
-            HTMLGenerator::tag("b", "Stock plenty", "", "color:green;");
+            echo HTMLGenerator::tag("b", "Stock plenty", "", "color:green;");
         } else if ($product->stock < 50 && $product->stock > 0) {
-            HTMLGenerator::tag("b", "Stock shortage", "", "color: orange");
+            echo HTMLGenerator::tag("b", "Stock shortage", "", "color: orange");
         } else {
-            HTMLGenerator::tag("b", "Out of stock", "", "color:red");
+            echo HTMLGenerator::tag("b", "Out of stock", "", "color:red");
         }
 
         if ($product->price > 100) {
-            HTMLGenerator::tag("p", "Free shipping");
+            echo HTMLGenerator::tag("p", "Free shipping");
         }
 
         echo "</div>";
 
         HTMLGenerator::row(5, 5, 5);
-        HTMLGenerator::tag("h2", "Technical specifications");
+        echo HTMLGenerator::tag("h2", "Technical specifications");
 
         echo "<table>";
         foreach ($product->getProductSpecModel() as $productSpecModel) {
