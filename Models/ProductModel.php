@@ -59,4 +59,9 @@ class ProductModel extends ActiveRecord
         );
         return self::loadById($result);
     }
+
+    public static function delete(int $productId)
+    {
+        return Mysql::delete("products", ['id' => $productId]);
+    }
 }

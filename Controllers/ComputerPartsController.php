@@ -10,6 +10,8 @@ namespace Controllers;
 
 
 use Models\ProductModel;
+use Models\ProductResourcesModel;
+use Models\ProductSpecDescriptionModel;
 use Models\ProductSpecModel;
 use Utils\HTMLGenerator;
 use Utils\StringUtils;
@@ -36,6 +38,28 @@ class ComputerPartsController extends BaseController implements Controller
         if (isset($_POST['submit'])) {
             $categoryId = constant("self::" . strtoupper($_GET['path']) . "_CATEGORY_ID");
             $this->insertNewProduct($categoryId);
+        }
+
+        if (isset($_POST['delete_product'])) {
+            $productId = StringUtils::sanitizeString($_POST['product_id']);
+
+            ProductResourcesModel::delete($productId);
+
+            $productSpecIds = [];
+            foreach (ProductSpecModel::loadByProductId($productId) as $productSpec) {
+                $productSpecIds[] = $productSpec->id;
+            }
+
+            //The spec id's are not identical, so delete each id based on product id
+            foreach ($productSpecIds as $productSpecId) {
+                ProductSpecDescriptionModel::delete($productSpecId);
+            }
+
+            ProductSpecModel::delete($productId);
+            ProductModel::delete($productId);
+
+            HTMLGenerator::tag("p", "Successfully deleted the product, going back");
+            header("Refresh:1; URL=" . $_GET['path']);
         }
     }
 

@@ -13,18 +13,20 @@ class ProductSpecModel extends ActiveRecord
 {
     protected $productSpecDescriptionModel;
 
-    public static function loadByProductId(int $id) {
+    public static function loadByProductId(int $id)
+    {
         $results = Mysql::getMany("product_specs", ['product_id' => $id]);
 
         $productSpecModel = [];
-        foreach($results as $result) {
+        foreach ($results as $result) {
             $productSpecModel[] = new static($result);
         }
 
         return $productSpecModel;
     }
 
-    public static function loadById(int $id) {
+    public static function loadById(int $id)
+    {
         $result = Mysql::getOne("product_specs", ["id" => $id]);
         return new self($result);
     }
@@ -37,8 +39,15 @@ class ProductSpecModel extends ActiveRecord
 
         return $this->productSpecDescriptionModel;
     }
-    public static function create(int $productId, string $name) {
+
+    public static function create(int $productId, string $name)
+    {
         $result = Mysql::insert("product_specs", ["product_id" => $productId, "name" => $name]);
         return self::loadById($result);
+    }
+
+    public static function delete(int $productId)
+    {
+        return Mysql::delete("product_specs", ['product_id' => $productId]);
     }
 }

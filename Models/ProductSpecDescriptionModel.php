@@ -41,4 +41,9 @@ class ProductSpecDescriptionModel extends ActiveRecord
         );
         return self::loadById($result);
     }
+
+    public static function delete(int $productSpecId)
+    {
+        return Mysql::delete("product_spec_description", ['product_spec_id' => $productSpecId]);
+    }
 }

@@ -45,4 +45,10 @@ class ProductResourcesModel extends ActiveRecord
         $result = Mysql::insert("product_resources", ["product_id" => $productId, "location" => $location, "mime_type" => $mimeType]);
         return self::loadById($result);
     }
+
+    public static function delete(int $productId)
+    {
+        return Mysql::delete("product_resources", ['product_id' => $productId]);
+
+    }
 }

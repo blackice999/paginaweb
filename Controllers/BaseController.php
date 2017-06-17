@@ -90,11 +90,7 @@ abstract class BaseController implements Controller
                     }
                 }
 
-                echo HTMLGenerator::tag("h3", "$" . $product->price, "", "float:left;");
-                HTMLGenerator::form("get", "cart", [
-                    ['label' => "", "type" => "hidden", "name" => "product_id", "value" => $product->id],
-                    ['label' => "", "type" => "submit", "name" => "purchase", "value" => "Purchase"]
-                ], "float-right");
+                $this->productActionsForm($product);
                 echo "</div>";
             }
 
@@ -135,5 +131,29 @@ abstract class BaseController implements Controller
             " with the id " . $result->id);
         $specId = ProductSpecModel::create($result->id, $specName);
         ProductSpecDescriptionModel::create($specId->id, $specDescription);
+    }
+
+    /**
+     * @param $product
+     */
+    public function productActionsForm($product)
+    {
+        echo HTMLGenerator::tag("h3", "$" . $product->price, "", "float:left;");
+
+
+        //Delete a product if the user is logged in
+        if (isset($_SESSION['userId'])) {
+            HTMLGenerator::form("post", $_GET['path'], [
+                ['label' => "", "type" => "hidden", "name" => "product_id", "value" => $product->id],
+                ['label' => "", "type" => "submit", "name" => "delete_product", "value" => "Delete"]
+            ], "float-left");
+        }
+
+
+        //Purchase a given product
+        HTMLGenerator::form("get", "cart", [
+            ['label' => "", "type" => "hidden", "name" => "product_id", "value" => $product->id],
+            ['label' => "", "type" => "submit", "name" => "purchase", "value" => "Purchase"]
+        ], "float-right");
     }
 }
