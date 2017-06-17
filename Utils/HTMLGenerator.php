@@ -33,14 +33,14 @@ class HTMLGenerator
         echo "</div> </div>";
     }
 
-    public static function form(string $method, string $action, array $data, string $class = "", string $style = "")
+    public static function form(string $method, string $action, array $data, string $class = "", string $style = "", string $enctype = "")
     {
 
         if (!in_array($method, self::$validMethodTypes)) {
             throw new Exceptions\MethodNotValid("Method " . $method . " is not a valid method type");
         }
 
-        echo "<form method=$method action=$action class=$class style=$style>";
+        echo "<form method=$method action=$action class=$class style=$style enctype=$enctype>";
 
         foreach ($data as $input) {
             echo "<label>" . $input['label'] . "</label>";

@@ -40,9 +40,9 @@ class ProductResourcesModel extends ActiveRecord
         return $this->productModel;
     }
 
-    public static function create(int $productId, string $tableName, string $location, string $mimeType)
+    public static function create(int $productId, string $location, string $mimeType)
     {
-        $result = Mysql::insert($tableName, ["product_id" => $productId, "location" => $location, "mine_type" => $mimeType]);
+        $result = Mysql::insert("product_resources", ["product_id" => $productId, "location" => $location, "mime_type" => $mimeType]);
         return self::loadById($result);
     }
 }

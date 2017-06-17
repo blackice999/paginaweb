@@ -11,19 +11,23 @@ namespace Utils;
 
 class StringUtils
 {
-    public static function encryptPassword(string $password) {
+    public static function encryptPassword(string $password)
+    {
         return password_hash($password, PASSWORD_BCRYPT);
     }
 
-    public static function sanitizeString(string $value) {
+    public static function sanitizeString(string $value)
+    {
         return filter_var($value, FILTER_SANITIZE_STRING);
     }
 
-    public static function removeUnderscore(string $value) {
+    public static function removeUnderscore(string $value)
+    {
         return str_replace("_", " ", $value);
     }
 
-    public static function toSingular(string $category) {
+    public static function toSingular(string $category)
+    {
         //Remove "s" from the end
         $category = substr($category, 0, strlen($category) - 1);
 
@@ -33,5 +37,10 @@ class StringUtils
         }
 
         return $category;
+    }
+
+    public static function contains(string $haystack, string $needle): bool
+    {
+        return strpos($haystack, $needle) !== false;
     }
 }

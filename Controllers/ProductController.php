@@ -9,6 +9,7 @@
 namespace Controllers;
 
 
+use Models\CategoriesModel;
 use Models\ProductModel;
 use Models\ProductResourcesModel;
 use Models\ProductSpecDescriptionModel;
@@ -20,6 +21,8 @@ class ProductController implements Controller
 {
 
     private $productId;
+    private $product;
+    const IMAGES_ROOT_DIRECTORY = "uploads/";
 
     /**
      * ProductController constructor.
@@ -28,13 +31,14 @@ class ProductController implements Controller
     public function __construct(int $productId)
     {
         $this->productId = $productId;
+        $this->product = ProductModel::loadById($this->productId);
     }
 
     public function get()
     {
-        $product = ProductModel::loadById($this->productId);
+
         HTMLGenerator::row(12, 12, 12);
-        echo HTMLGenerator::tag("h2", $product->name);
+        echo HTMLGenerator::tag("h2", $this->product->name);
         HTMLGenerator::closeRow();
         HtmlGenerator::row(5, 5, 5);
 
@@ -43,16 +47,24 @@ class ProductController implements Controller
         <button class=\"orbit-previous\"><span class=\"show-for-sr\">Previous Slide</span>&#9664;&#xFE0E;</button>
         <button class=\"orbit-next\"><span class=\"show-for-sr\">Next Slide</span>&#9654;&#xFE0E;</button>";
 
-        $productResoucesModel = ProductResourcesModel::loadByProductId($this->productId);
-        foreach ($productResoucesModel as $productResources) {
-            echo HTMLGenerator::tag("li",
-                HTMLGenerator::image($productResources->location, "", "orbit-image"),
-                "orbit-slide");
+        $productResourcesModel = ProductResourcesModel::loadByProductId($this->productId);
+        foreach ($productResourcesModel as $productResources) {
+
+            //If the image is stored on the server, display from there
+            if (StringUtils::contains($productResources->location, self::IMAGES_ROOT_DIRECTORY)) {
+                echo HTMLGenerator::tag("li",
+                    HTMLGenerator::image("../" . $productResources->location, "", "orbit-image"),
+                    "orbit-slide");
+            } else {
+                echo HTMLGenerator::tag("li",
+                    HTMLGenerator::image($productResources->location, "", "orbit-image"),
+                    "orbit-slide");
+            }
         }
         echo "</ul>
         <nav class=\"orbit-bullets\">";
 
-        $productResourcesLength = sizeof($productResoucesModel);
+        $productResourcesLength = sizeof($productResourcesModel);
 
         //First button needs to be active, so set it here
         echo "<button class=\"is-active\" data-slide=\"1\">";
@@ -75,25 +87,25 @@ class ProductController implements Controller
         echo "</div>";
         HTMLGenerator::closeRow();
         echo "<div class='float-right'>";
-        echo HTMLGenerator::tag("div", "$" . $product->price);
+        echo HTMLGenerator::tag("div", "$" . $this->product->price);
         echo "<br />";
         HTMLGenerator::form("get", "../cart", [
-            ['label' => "", "type" => "hidden", "name" => "product_id", "value" => $product->id],
+            ['label' => "", "type" => "hidden", "name" => "product_id", "value" => $this->product->id],
             ['label' => "", "type" => "submit", "name" => "purchase", "value" => "Purchase"]
         ], "float-right");
 
         echo "</div>";
 
         //Content for the middle of the page
-        if ($product->stock > 50) {
+        if ($this->product->stock > 50) {
             echo HTMLGenerator::tag("b", "Stock plenty", "", "color:green;");
-        } else if ($product->stock < 50 && $product->stock > 0) {
+        } else if ($this->product->stock < 50 && $this->product->stock > 0) {
             echo HTMLGenerator::tag("b", "Stock shortage", "", "color: orange");
         } else {
             echo HTMLGenerator::tag("b", "Out of stock", "", "color:red");
         }
 
-        if ($product->price > 100) {
+        if ($this->product->price > 100) {
             echo HTMLGenerator::tag("p", "Free shipping");
         }
 
@@ -101,14 +113,14 @@ class ProductController implements Controller
 
         HTMLGenerator::row(11, 11, 11);
         echo "<div class='callout'>";
-        echo $product->description;
+        echo $this->product->description;
         echo "</div>";
         HTMLGenerator::closeRow();
         HTMLGenerator::row(5, 5, 5);
         echo HTMLGenerator::tag("h2", "Technical specifications");
 
         echo "<table>";
-        foreach ($product->getProductSpecModel() as $productSpecModel) {
+        foreach ($this->product->getProductSpecModel() as $productSpecModel) {
             echo "<tr>";
             echo "<td> " . $productSpecModel->name . "</td>";
             echo "<td>";
@@ -123,8 +135,8 @@ class ProductController implements Controller
 
         HTMLGenerator::closeRow();
         $this->addNewSpecificationForm();
+        $this->addImageForm();
         $this->modifyProductForm();
-
     }
 
     public function modifyProductForm()
@@ -161,6 +173,20 @@ class ProductController implements Controller
         }
     }
 
+    public function addImageForm()
+    {
+        if (isset($_SESSION['userId'])) {
+            HTMLGenerator::row(5, 5, 5);
+            echo HTMLGenerator::tag("h2", "Upload image");
+            HTMLGenerator::form("post", "../" . $_GET['path'], [
+                ["label" => "Select image", "type" => "file", "name" => "product_image", "value" => ""],
+                ["label" => "", "type" => "submit", "name" => "add_image", "value" => "Add"]
+            ], "", "", "multipart/form-data");
+
+            HTMLGenerator::closeRow();
+        }
+    }
+
     public function post()
     {
         if (isset($_POST['new_spec'])) {
@@ -168,11 +194,58 @@ class ProductController implements Controller
             $name = StringUtils::sanitizeString($_POST['name']);
             $description = StringUtils::sanitizeString($_POST['description']);
             $descriptionPieces = explode(", ", $description);
-
             $spec = ProductSpecModel::create($this->productId, $name);
 
             foreach ($descriptionPieces as $descriptionPiece) {
                 ProductSpecDescriptionModel::create($spec->id, $descriptionPiece);
+            }
+        }
+
+        if (isset($_POST['add_image'])) {
+            $category = CategoriesModel::loadById($this->product->category_id);
+            $categoryName = str_replace(" ", "_", strtolower($category->name));
+            $targetDirectory = self::IMAGES_ROOT_DIRECTORY . $categoryName . "/";
+            $targetFile = $targetDirectory . basename($_FILES['product_image']['name']);
+            $fileType = pathinfo($targetFile, PATHINFO_EXTENSION);
+            $uploadOk = 1;
+            $check = getimagesize($_FILES['product_image']['tmp_name']);
+
+            if (!$check) {
+                echo HTMLGenerator::tag("p", "File is not an image");
+                $uploadOk = 0;
+            }
+
+            if (!file_exists($targetDirectory)) {
+                mkdir($targetDirectory);
+            }
+
+            if (file_exists($targetFile)) {
+                echo HTMLGenerator::tag("p", "Sorry, file already exists");
+                $uploadOk = 0;
+            }
+
+            //If the file is bigger than 5MB, don't upload it
+            if ($_FILES['product_image']['size'] > 5000000) {
+                echo HTMLGenerator::tag("p", "File is too large");
+                $uploadOk = 0;
+            }
+
+            if ($fileType != "jpg" && $fileType != "png" && $fileType != "jpeg" && $fileType != "gif") {
+                echo HTMLGenerator::tag("p", "Sorry, only JPG, JPEG, PNG & GIF files are allowed.");
+                $uploadOk = 0;
+            }
+
+            if ($uploadOk == 0) {
+                echo HTMLGenerator::tag("p", "Sorry, your file was not uploaded");
+            } else {
+                if (move_uploaded_file($_FILES['product_image']['tmp_name'], $targetFile)) {
+                    echo HTMLGenerator::tag("p",
+                        "The file " . basename($_FILES['product_image']['name']) . " has been uploaded, going back");
+                    header("Refresh:1; URL=../" . $_GET['path']);
+                    ProductResourcesModel::create($this->productId, $targetFile, $check['mime']);
+                } else {
+                    echo HTMLGenerator::tag("p", "Sorry, there was an error uploading your file");
+                }
             }
         }
     }
