@@ -33,6 +33,11 @@ class SoftwareController extends BaseController implements Controller
             $categoryId = constant("self::" . strtoupper($_GET['path']) . "_CATEGORY_ID");
             $this->insertNewProduct($categoryId);
         }
+
+        if (isset($_POST['delete_product'])) {
+            $productId = StringUtils::sanitizeString($_POST['product_id']);
+            $this->deleteProduct($productId);
+        }
     }
 
     public function __call($name, $arguments)

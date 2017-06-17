@@ -156,4 +156,31 @@ abstract class BaseController implements Controller
             ['label' => "", "type" => "submit", "name" => "purchase", "value" => "Purchase"]
         ], "float-right");
     }
+
+    public function deleteProduct(int $productId)
+    {
+
+        //Delete images
+        ProductResourcesModel::delete($productId);
+
+        $productSpecIds = [];
+        foreach (ProductSpecModel::loadByProductId($productId) as $productSpec) {
+            $productSpecIds[] = $productSpec->id;
+        }
+
+        //The spec id's are not identical, so delete each specification description based on product id
+        foreach ($productSpecIds as $productSpecId) {
+            ProductSpecDescriptionModel::delete($productSpecId);
+        }
+
+        //Delete specifications
+        ProductSpecModel::delete($productId);
+
+        //Delete the given product
+        ProductModel::delete($productId);
+
+        HTMLGenerator::tag("p", "Successfully deleted the product, going back");
+        header("Refresh:1; URL=" . $_GET['path']);
+
+    }
 }

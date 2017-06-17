@@ -9,6 +9,7 @@
 namespace Controllers;
 
 use Utils\HTMLGenerator;
+use Utils\StringUtils;
 
 class TelephonesController extends BaseController implements Controller
 {
@@ -30,6 +31,11 @@ class TelephonesController extends BaseController implements Controller
         if (isset($_POST['submit'])) {
             $categoryId = constant("self::" . strtoupper($_GET['path']) . "_CATEGORY_ID");
             $this->insertNewProduct($categoryId);
+        }
+
+        if (isset($_POST['delete_product'])) {
+            $productId = StringUtils::sanitizeString($_POST['product_id']);
+            $this->deleteProduct($productId);
         }
     }
 

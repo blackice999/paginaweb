@@ -42,24 +42,7 @@ class ComputerPartsController extends BaseController implements Controller
 
         if (isset($_POST['delete_product'])) {
             $productId = StringUtils::sanitizeString($_POST['product_id']);
-
-            ProductResourcesModel::delete($productId);
-
-            $productSpecIds = [];
-            foreach (ProductSpecModel::loadByProductId($productId) as $productSpec) {
-                $productSpecIds[] = $productSpec->id;
-            }
-
-            //The spec id's are not identical, so delete each id based on product id
-            foreach ($productSpecIds as $productSpecId) {
-                ProductSpecDescriptionModel::delete($productSpecId);
-            }
-
-            ProductSpecModel::delete($productId);
-            ProductModel::delete($productId);
-
-            HTMLGenerator::tag("p", "Successfully deleted the product, going back");
-            header("Refresh:1; URL=" . $_GET['path']);
+            $this->deleteProduct($productId);
         }
     }
 
