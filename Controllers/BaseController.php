@@ -179,7 +179,7 @@ abstract class BaseController implements Controller
         //Delete the given product
         ProductModel::delete($productId);
 
-        HTMLGenerator::tag("p", "Successfully deleted the product, going back");
+        echo HTMLGenerator::tag("p", "Successfully deleted the product, going back");
         header("Refresh:1; URL=" . $_GET['path']);
 
     }
