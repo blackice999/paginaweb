@@ -141,7 +141,7 @@ class ProductController implements Controller
 
     public function modifyProductForm()
     {
-        if (isset($_SESSION['userId'])) {
+        if (isset($_SESSION['userId']) && ($_SESSION['user_id'] == 1 || $_SESSION['user_id']) == 3) {
             HTMLGenerator::row(5, 5, 5);
             echo HTMLGenerator::tag("h2", "Modify this product");
             HTMLGenerator::form("post", $_GET['path'], [
@@ -160,7 +160,7 @@ class ProductController implements Controller
 
     public function addNewSpecificationForm()
     {
-        if (isset($_SESSION['userId'])) {
+        if (isset($_SESSION['userId']) && ($_SESSION['user_id'] == 1 || $_SESSION['user_id']) == 3) {
             HTMLGenerator::row(5, 5, 5);
             echo HTMLGenerator::tag("h2", "Add new specification, separate description by comma");
             HTMLGenerator::form("post", "../" . $_GET['path'], [
@@ -175,7 +175,7 @@ class ProductController implements Controller
 
     public function addImageForm()
     {
-        if (isset($_SESSION['userId'])) {
+        if (isset($_SESSION['userId']) && ($_SESSION['user_id'] == 1 || $_SESSION['user_id']) == 3) {
             HTMLGenerator::row(5, 5, 5);
             echo HTMLGenerator::tag("h2", "Upload image");
             HTMLGenerator::form("post", "../" . $_GET['path'], [
