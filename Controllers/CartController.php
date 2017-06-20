@@ -9,6 +9,8 @@
 namespace Controllers;
 
 
+use Models\OrderProductsModel;
+use Models\OrdersModel;
 use Models\ProductModel;
 use Models\UserAddressesModel;
 use Utils\HTMLGenerator;
@@ -44,6 +46,7 @@ class CartController implements Controller
                 echo HTMLGenerator::tag("h2", "Your cart is empty");
             } else {
                 echo HtmlGenerator::tag("h2", "In your cart");
+
                 $sum = 0;
                 echo "<div class='callout'>";
 
@@ -76,20 +79,30 @@ class CartController implements Controller
                 echo "</div>";
 
                 echo HTMLGenerator::tag("h3", "Select your address");
-                echo "<select name='addresses'>";
-                foreach (UserAddressesModel::loadByUserId($_SESSION['userId']) as $address) {
-                    echo "<option value='" . $address->id . "'>$address->address";
-                }
+                if (!isset($_SESSION['userId'])) {
+                    echo HTMLGenerator::tag("p", "Note: please log in to continue purchase", "", "color:red;");
+                    echo HTMLGenerator::link("login", "Log in", "button");
+                } else {
+                    echo "<select name='addresses'>";
 
-                echo "</select>";
-                echo "<input type='submit' class='button' name='buy' value='Buy'>";
-                echo "</form>";
+
+                    foreach (UserAddressesModel::loadByUserId($_SESSION['userId']) as $address) {
+                        echo "<option value='" . $address->id . "'>$address->address";
+                    }
+
+                    echo "</select>";
+
+
+                    echo "<input type='submit' class='button' name='buy' value='Buy'>";
+                    echo "</form>";
+                }
 
                 echo HTMLGenerator::tag("h4",
                     "Total " . HTMLGenerator::tag("span", $sum, "total"),
                     "float-right");
                 HTMLGenerator::closeRow();
                 HTMLGenerator::row(10, 10, 10);
+
             }
         }
     }
@@ -100,12 +113,17 @@ class CartController implements Controller
             $sum = 0;
             $numberOfProducts = sizeof($_SESSION['products']);
 
+            $invoiceName = StringUtils::generateRandomString(20);
+            $order = OrdersModel::create($_SESSION['userId'], $invoiceName);
             for ($i = 0; $i < $numberOfProducts; $i++) {
                 $quantity = StringUtils::sanitizeString($_POST['quantity'][$i]);
                 $productId = $_SESSION['products'][$i];
                 $product = ProductModel::loadById($productId);
+
                 $address = UserAddressesModel::loadById(StringUtils::sanitizeString($_POST['addresses']))->address;
+
                 ProductModel::buy($productId, $quantity);
+                OrderProductsModel::create($order->id, $productId);
                 $sum += $product->price;
             }
 
