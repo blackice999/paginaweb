@@ -141,15 +141,13 @@ class ProductController implements Controller
 
     public function modifyProductForm()
     {
-        if (isset($_SESSION['userId']) && ($_SESSION['user_id'] == 1 || $_SESSION['user_id']) == 3) {
+        if (isset($_SESSION['userId']) && ($_SESSION['userId'] == 1 || $_SESSION['userId']) == 3) {
             HTMLGenerator::row(5, 5, 5);
             echo HTMLGenerator::tag("h2", "Modify this product");
-            HTMLGenerator::form("post", $_GET['path'], [
+            HTMLGenerator::form("post", "../" . $_GET['path'], [
                 ["label" => "Name", "type" => "text", "name" => "name", "value" => ""],
                 ["label" => "Description", "type" => "text", "name" => "description", "value" => ""],
                 ["label" => "price", "type" => "text", "name" => "price", "value" => ""],
-                ["label" => "Specification name", "type" => "text", "name" => "spec_name", "value" => ""],
-                ["label" => "Specification description", "type" => "text", "name" => "spec_description", "value" => ""],
                 ["label" => "Stock", "type" => "number", "name" => "stock", "value" => ""],
                 ["label" => "", "type" => "submit", "name" => "modify_product", "value" => "Modify"]
             ]);
@@ -160,7 +158,7 @@ class ProductController implements Controller
 
     public function addNewSpecificationForm()
     {
-        if (isset($_SESSION['userId']) && ($_SESSION['user_id'] == 1 || $_SESSION['user_id']) == 3) {
+        if (isset($_SESSION['userId']) && ($_SESSION['userId'] == 1 || $_SESSION['userId']) == 3) {
             HTMLGenerator::row(5, 5, 5);
             echo HTMLGenerator::tag("h2", "Add new specification, separate description by comma");
             HTMLGenerator::form("post", "../" . $_GET['path'], [
@@ -175,7 +173,7 @@ class ProductController implements Controller
 
     public function addImageForm()
     {
-        if (isset($_SESSION['userId']) && ($_SESSION['user_id'] == 1 || $_SESSION['user_id']) == 3) {
+        if (isset($_SESSION['userId']) && ($_SESSION['userId'] == 1 || $_SESSION['userId']) == 3) {
             HTMLGenerator::row(5, 5, 5);
             echo HTMLGenerator::tag("h2", "Upload image");
             HTMLGenerator::form("post", "../" . $_GET['path'], [
@@ -190,7 +188,6 @@ class ProductController implements Controller
     public function post()
     {
         if (isset($_POST['new_spec'])) {
-            echo $this->productId;
             $name = StringUtils::sanitizeString($_POST['name']);
             $description = StringUtils::sanitizeString($_POST['description']);
             $descriptionPieces = explode(", ", $description);
@@ -247,6 +244,19 @@ class ProductController implements Controller
                     echo HTMLGenerator::tag("p", "Sorry, there was an error uploading your file");
                 }
             }
+        }
+
+        if (isset($_POST['modify_product'])) {
+            $categoryId = CategoriesModel::loadById($this->product->category_id)->id;
+
+            $name = StringUtils::sanitizeString($_POST['name']);
+            $description = StringUtils::sanitizeString($_POST['description']);
+            $price = StringUtils::sanitizeString($_POST['price']);
+            $stock = StringUtils::sanitizeString($_POST['stock']);
+
+            ProductModel::update($this->productId, $categoryId, $name, $description, $price, $stock);
+
+
         }
     }
 }

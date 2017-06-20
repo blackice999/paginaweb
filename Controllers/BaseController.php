@@ -141,7 +141,7 @@ abstract class BaseController implements Controller
         echo HTMLGenerator::tag("h3", "$" . $product->price, "", "float:left;");
 
         //Delete a product if the user is logged in
-        if (isset($_SESSION['userId']) && ($_SESSION['user_id'] == 1 || $_SESSION['user_id']) == 3) {
+        if (isset($_SESSION['userId']) && ($_SESSION['userId'] == 1 || $_SESSION['userId']) == 3) {
             HTMLGenerator::form("post", $_GET['path'], [
                 ['label' => "", "type" => "hidden", "name" => "product_id", "value" => $product->id],
                 ['label' => "", "type" => "submit", "name" => "delete_product", "value" => "Delete"]

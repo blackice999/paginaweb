@@ -64,4 +64,17 @@ class ProductModel extends ActiveRecord
     {
         return Mysql::delete("products", ['id' => $productId]);
     }
+
+    public static function update(int $productId, int $categoryId, string $name, string $description, string $price, int $stock)
+    {
+        return Mysql::update("products",
+            [
+                'category_id' => $categoryId,
+                'name' => $name,
+                'description' => $description,
+                'price' => $price,
+                'stock' => $stock
+            ],
+            ['id' => $productId]);
+    }
 }
