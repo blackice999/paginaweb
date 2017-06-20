@@ -25,7 +25,6 @@ $menu = [
             ]
         ]
     ],
-    "informations" => [[]],
     "contact" => [[]],
     "account" => [[]],
     "log_in" => [[]],

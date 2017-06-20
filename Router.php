@@ -23,7 +23,6 @@ class Router
                 ]
         ],
         "audio_photo" => ["speakers" => ["portable_speakers"], "microphones", "cameras" => ["d_slrs", "compacts", "bridges"]],
-        "informations" => [],
         "contact" => [],
         "account" => [],
         "register" => []
