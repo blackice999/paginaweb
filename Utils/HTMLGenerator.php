@@ -33,7 +33,7 @@ class HTMLGenerator
         echo "</div> </div>";
     }
 
-    public static function form(string $method, string $action, array $data, string $class = "", string $style = "", string $enctype = "")
+    public static function form(string $method, string $action, array $data, string $class = "", string $style = "", string $enctype = "", bool $disabled = false)
     {
 
         if (!in_array($method, self::$validMethodTypes)) {
@@ -46,7 +46,13 @@ class HTMLGenerator
             echo "<label>" . $input['label'] . "</label>";
 
             if ($input['type'] === "submit") {
-                echo "<input type=" . $input['type'] . " class='button' name=" . $input['name'] . " value=" . $input['value'] . ">";
+
+                //Disable submit button if a given condition is met
+                if ($disabled) {
+                    echo "<input type=" . $input['type'] . " disabled class='button' name=" . $input['name'] . " value=" . $input['value'] . ">";
+                } else {
+                    echo "<input type=" . $input['type'] . " class='button' name=" . $input['name'] . " value=" . $input['value'] . ">";
+                }
             } else {
                 echo "<input type=" . $input['type'] . " name=" . $input['name'] . " value=" . $input['value'] . ">";
             }

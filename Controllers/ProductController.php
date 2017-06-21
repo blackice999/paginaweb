@@ -89,10 +89,18 @@ class ProductController implements Controller
         echo "<div class='float-right'>";
         echo HTMLGenerator::tag("div", "$" . $this->product->price);
         echo "<br />";
-        HTMLGenerator::form("get", "../cart", [
-            ['label' => "", "type" => "hidden", "name" => "product_id", "value" => $this->product->id],
-            ['label' => "", "type" => "submit", "name" => "purchase", "value" => "Purchase"]
-        ], "float-right");
+
+        if ($this->product->stock > 0) {
+            HTMLGenerator::form("get", "../cart", [
+                ['label' => "", "type" => "hidden", "name" => "product_id", "value" => $this->product->id],
+                ['label' => "", "type" => "submit", "name" => "purchase", "value" => "Purchase"]
+            ], "float-right");
+        } else {
+            HTMLGenerator::form("get", "../cart", [
+                ["label" => "", "type" => "hidden", "name" => "product_id", "value" => $this->product->id],
+                ["label" => "", "type" => "submit", "name" => "purchase", "value" => "Purchase"]
+            ], "float-right", "", "", true);
+        }
 
         echo "</div>";
 
