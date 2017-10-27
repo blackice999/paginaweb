@@ -151,10 +151,17 @@ abstract class BaseController implements Controller
 
 
         //Purchase a given product
-        HTMLGenerator::form("get", "cart", [
-            ['label' => "", "type" => "hidden", "name" => "product_id", "value" => $product->id],
-            ['label' => "", "type" => "submit", "name" => "purchase", "value" => "Purchase"]
-        ], "float-right");
+        if ($product->stock > 0) {
+            HTMLGenerator::form("get", "cart", [
+                ['label' => "", "type" => "hidden", "name" => "product_id", "value" => $product->id],
+                ['label' => "", "type" => "submit", "name" => "purchase", "value" => "Purchase"]
+            ], "float-right");
+        } else {
+            HTMLGenerator::form("get", "cart", [
+                ["label" => "", "type" => "hidden", "name" => "product_id", "value" => $product->id],
+                ["label" => "", "type" => "submit", "name" => "purchase", "value" => "Purchase"]
+            ], "float-right", "", "", true);
+        }
     }
 
     public function deleteProduct(int $productId)
