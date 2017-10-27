@@ -52,7 +52,7 @@ class LogInController implements Controller
 
             $userModel = UserModel::loadByEmail($email);
 
-            $password = StringUtils::encryptPassword("adsfasf");
+            $password = StringUtils::encryptPassword($password);
             if (password_verify($password, $userModel->password)) {
                 $this->errors[] = "Passwords do not match";
             }
@@ -60,8 +60,8 @@ class LogInController implements Controller
             if (!empty($errors)) {
                 var_dump($this->errors);
             } else {
-                HTMLGenerator::row(5,5,5);
-                echo HTMLGenerator::tag("h2","Successfully logged in");
+                HTMLGenerator::row(5, 5, 5);
+                echo HTMLGenerator::tag("h2", "Successfully logged in");
                 HTMLGenerator::closeRow();
                 $_SESSION['userId'] = $userModel->id;
                 header("Location: index");

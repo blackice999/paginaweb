@@ -143,8 +143,6 @@ abstract class BaseController implements Controller
         //Delete a product if the user is logged in
         if (isset($_SESSION['userId']) && ($_SESSION['userId'] == 1 || $_SESSION['userId'] == 3)) {
 
-            echo $_SESSION['userId'];
-            echo "it is admin";
             HTMLGenerator::form("post", $_GET['path'], [
                 ['label' => "", "type" => "hidden", "name" => "product_id", "value" => $product->id],
                 ['label' => "", "type" => "submit", "name" => "delete_product", "value" => "Delete"]
