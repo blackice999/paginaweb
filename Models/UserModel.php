@@ -40,7 +40,12 @@ class UserModel extends ActiveRecord
     {
         $fullName = explode(" ", $fullName);
         $firstName = $fullName[0];
-        $lastName = $fullName[1];
+
+        if (!isset($fullName[1])) {
+            $lastName = "";
+        } else {
+            $lastName = $fullName[1];
+        }
 
         $id = Mysql::insert("users", [
             "first_name" => $firstName,
@@ -52,5 +57,4 @@ class UserModel extends ActiveRecord
 
         return self::loadById($id);
     }
-
 }
