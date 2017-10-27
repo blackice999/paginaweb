@@ -24,7 +24,7 @@ class UserAddressesModel extends ActiveRecord
     {
         $results = Mysql::getMany("user_addresses", ['user_id' => $userId]);
         $userAddressesModel = [];
-        foreach($results as $result) {
+        foreach ($results as $result) {
             $userAddressesModel[] = new static($result);
         }
 
@@ -43,10 +43,9 @@ class UserAddressesModel extends ActiveRecord
 
     public static function isAddressSet(int $userId)
     {
-        try {
-            self::loadByUserId($userId);
+        if (!empty(self::loadByUserId($userId))) {
             return true;
-        } catch (NoResultsException $e) {
+        } else {
             return false;
         }
     }
