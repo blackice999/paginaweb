@@ -69,7 +69,7 @@ class ContactController implements Controller
         $this->displayWorkingHours();
 
         echo "<div class='large-10 medium-3 small-3 columns'>";
-        echoHTMLGenerator::tag("h3", "News and client support on social networks");
+        echo HTMLGenerator::tag("h3", "News and client support on social networks");
         echo "</div>";
 
         $this->displaySocialMediaLinks();
